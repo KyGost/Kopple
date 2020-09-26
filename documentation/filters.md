@@ -20,7 +20,7 @@ If post has a filter and user is in any listed filter, assume that user is part 
 If post has a filter but user is **not** in any listed filter, assume that user is **not** part of intended audience.  
 
 ### Notes
-Perhaps users can have an UnFilter. UnFilter will prevent them from seeing posts from user if it is filtered with `filter` even if they are inclk
+Perhaps users can have an UnFilter. UnFilter will prevent them from seeing posts from user if it is filtered with `filter` even if they are included in said filter.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM4MDk3MDQzOCwtODg3OTM1MDUzXX0=
+eyJoaXN0b3J5IjpbODQ5NTY1MTkxLC04ODc5MzUwNTNdfQ==
 -->
