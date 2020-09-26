@@ -23,16 +23,23 @@ graph TD;
 	C-->J;
 	D-->K;
 	D-->L;
-	E-->M;
+	D-->M;
 	E-->N;
-	F-->O;
+	E-->O;
 	F-->P;
-	G-->Q;
+	F-->Q;
 	G-->R;
+	G-->S;
+	H-->T;
+	H-->T;
+	I-->U;
+	I-->V;
+	J-->W;
+	J-->X;
 ```
 
 ## Functioning
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI2NDY4ODI2MSwtNzY4MDg4MDYsLTE1Nj
+eyJoaXN0b3J5IjpbMTk0MDk4ODc3OSwtNzY4MDg4MDYsLTE1Nj
 E1ODA4NTRdfQ==
 -->
