@@ -27,11 +27,11 @@ Purpose: Houses data
 ### Follows
 Type: **J**ava**S**cript**O**bject**N**otation  
 Name: `follows.json`  
-Purpose: See [follows](wip.md)
+Purpose: See [follows](follows.md)
 ### Ignores
 Type: **J**ava**S**cript**O**bject**N**otation  
 Name: `ignores.json`  
-Purpose: See [ignores](wip.md)
+Purpose: See [ignores](ignores.md)
 ### Feed
 Type: **J**ava**S**cript**O**bject**N**otation  
 Name: `feed.json`  
@@ -41,5 +41,5 @@ Type: **J**ava**S**cript**O**bject**N**otation
 Name: `interactions.json`  
 Purpose: See [interactions](wip.md)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ5NzkwNDMyMV19
+eyJoaXN0b3J5IjpbNDU3Njk3MDU2XX0=
 -->
