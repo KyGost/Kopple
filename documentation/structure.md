@@ -44,6 +44,11 @@ Purpose: See [interactions](interactions.md)
 Type: **J**ava**S**cript**O**bject**N**otation  
 Name: `self.json`  
 Purpose: See [self](self.md)
+### Filters
+Type: **J**ava**S**cript**O**bject**N**otation  
+Name: `filters.json`  
+Purpose: See [filters](filters.md)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NTE1ODk0MTZdfQ==
+eyJoaXN0b3J5IjpbLTE4ODM5OTc0NTMsLTE5NTE1ODk0MTZdfQ
+==
 -->
