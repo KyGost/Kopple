@@ -13,6 +13,10 @@ The level of following to do is ideally set by a settings option and defaults to
 
 ![Crawling example diagram](https://lh3.googleusercontent.com/pw/ACtC-3dIRO7vqORVtKok-LkgbemfzOLcYzOsLAp7x-7MfkyLan-vTMZ7b-2vFjOfnoEnMk1xDZ7EbVw6sW-VVCgPy9qaUkAaqx0fRe4tSJYmEQYx1sbkbsT-M20quRBw9hO-e2CQu_7u44UnJudXr9qXB91Diw=w1480-h436-no?authuser=0)
 `self` would load [interactions](interactions.md) from `A`-`Z` but [feeds](feeds.md) only from `A`-`C`.
+
+## Address
+Means: Hosted location of any user in the web.  
+On the basis of [beaker](https://beaker.dev/), hyper:// hosting location of a client.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU2MjM4NjgzMiw5NTM5MzU1MTldfQ==
+eyJoaXN0b3J5IjpbNDk5NzE0ODk3LDk1MzkzNTUxOV19
 -->
