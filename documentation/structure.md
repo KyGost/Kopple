@@ -43,7 +43,7 @@ Purpose: See [interactions](interactions.md)
 ### Self
 Type: **J**ava**S**cript**O**bject**N**otation  
 Name: `self.json`  
-Purpose: See [interactions](interactions.md)
+Purpose: See [self](self.md)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk0NTQ0NjM1NF19
+eyJoaXN0b3J5IjpbLTE5NTE1ODk0MTZdfQ==
 -->
