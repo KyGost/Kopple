@@ -1,5 +1,11 @@
-# Test
-Using StackEdit-- this is a test
+# KyWeb
+(Better name pending)
+
+## Mission
+To creaT
+
+## Documentation
+See [structure](structure.md) as starting point
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyMjMzNjA0ODRdfQ==
+eyJoaXN0b3J5IjpbNzkxOTYzODA1XX0=
 -->
