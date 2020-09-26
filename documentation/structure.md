@@ -5,8 +5,8 @@ Name: `client\`
 Purpose: Houses client files
 
 ### Index
-Type: HTML
-Name: `index.html`
+Type: HTML 
+Name: `index.html` 
 Purpose: Structure of client
 ### Style
 Type: CSS
@@ -41,5 +41,5 @@ Type: **J**ava**S**cript**O**bject**N**otation
 Name: `interactions.json`
 Purpose: See [interactions](wip.md)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY1MzU5MDQ2NV19
+eyJoaXN0b3J5IjpbLTE0ODY1NjM5NjFdfQ==
 -->
