@@ -1,8 +1,9 @@
 # Structure
 ## Client
-Type: Directory
-Name: `client\`
-Purpose: Houses client files
+Type: Directory	
+Name: `client\`	
+Purpose: Houses client files	
+
 ### Index
 Type: HTML
 Name: `index.html`
@@ -40,5 +41,5 @@ Type: **J**ava**S**cript**O**bject**N**otation
 Name: `interactions.json`
 Purpose: See [interactions](wip.md)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA4MjEzMjE3N119
+eyJoaXN0b3J5IjpbMTQ5Mzk5NjU5OV19
 -->
