@@ -3,8 +3,8 @@ Uses [JSON](https://www.json.org/).
 
 Format:
  - post
-	 - id?
-	 - content
+	 - id (1) ?
+	 - content (1) markdown string
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxNDY0NjM5NTBdfQ==
+eyJoaXN0b3J5IjpbLTEzNTIwMjI0NjJdfQ==
 -->
