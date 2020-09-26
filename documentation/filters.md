@@ -7,8 +7,12 @@ Format:
 	 - addresses (1) array:[address](address.md)
 
 ## Usage
-A filter is used to determine the target audience.
-The user can use the client to create a filter and assign users who are the intended 
+A filter is used to determine the target audience.  
+The user can use the client to create a filter and assign users whom are the intended audience.
+### Implementation by default
+User can select users from follows.json
+### Potential implementation
+Scan user trees to find who is following user
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODY2NTM0NzEzLC04ODc5MzUwNTNdfQ==
+eyJoaXN0b3J5IjpbLTE0Mzc0MDU2NzYsLTg4NzkzNTA1M119
 -->
