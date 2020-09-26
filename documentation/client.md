@@ -18,15 +18,21 @@ graph TD;
 	A-->E;
 	B-->F;
 	B-->G;
-	B-->H;
 	C-->H;
 	C-->I;
 	C-->J;
-	D-->;
+	D-->K;
+	D-->L;
+	E-->M;
+	E-->N;
+	F-->O;
+	F-->P;
+	G-->Q;
+	G-->R;
 ```
 
 ## Functioning
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTkzMTMzMzc3MywtNzY4MDg4MDYsLTE1Nj
+eyJoaXN0b3J5IjpbMTI2NDY4ODI2MSwtNzY4MDg4MDYsLTE1Nj
 E1ODA4NTRdfQ==
 -->
