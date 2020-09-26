@@ -35,11 +35,11 @@ Purpose: See [ignores](ignores.md)
 ### Feed
 Type: **J**ava**S**cript**O**bject**N**otation  
 Name: `feed.json`  
-Purpose: See [feed](wip.md)
+Purpose: See [feed](feed.md)
 ### Interactions
 Type: **J**ava**S**cript**O**bject**N**otation  
 Name: `interactions.json`  
-Purpose: See [interactions](wip.md)
+Purpose: See [interactions](interactions.md)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDU3Njk3MDU2XX0=
+eyJoaXN0b3J5IjpbMTcxMDI4OTA4OV19
 -->
