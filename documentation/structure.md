@@ -61,7 +61,9 @@ Purpose: See [filters](filters.md)
 
 ## Cache
 Type: Directory  
-Name: `
+Name: `cache\`  
+Purpose: Not certain if this should be implemented. Potentially, crawls will store data here, enabling offline use.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU0NjIzODY3NywtMTk1MTU4OTQxNl19
+eyJoaXN0b3J5IjpbLTE3ODkxNjQyMTEsLTE5NTE1ODk0MTZdfQ
+==
 -->
