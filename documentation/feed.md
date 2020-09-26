@@ -9,12 +9,13 @@ Format:
 ## ID
 How to compose the post identity?
 
-### Abitrary autoincrement perhaps?
+### Abitrary Automatic Increment perhaps?
 If autoincrement, identity must never be changed. I suppose this is the case anyway.  
-What to do if user deletes last item?
+What to do if user deletes last item?  
+Store next post identity in self?
 
-### Hashing
+### Hashing perhaps?
 This wouldn't work. Posts should be mutable.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODY1MjIwMjU4LDE2OTk1MTAyNThdfQ==
+eyJoaXN0b3J5IjpbMTI3MDQxNDE4MiwxNjk5NTEwMjU4XX0=
 -->
