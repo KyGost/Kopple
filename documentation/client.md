@@ -10,7 +10,7 @@ After filtering, interactions are added, these are gathered from the client's [`
 The level of following to do is ideally set by a settings option, defaults to 3 (self, following, following, following).  
 
 ![Crawling example diagram](https://lh3.googleusercontent.com/pw/ACtC-3dIRO7vqORVtKok-LkgbemfzOLcYzOsLAp7x-7MfkyLan-vTMZ7b-2vFjOfnoEnMk1xDZ7EbVw6sW-VVCgPy9qaUkAaqx0fRe4tSJYmEQYx1sbkbsT-M20quRBw9hO-e2CQu_7u44UnJudXr9qXB91Diw=w1480-h436-no?authuser=0)
-`self` would load [interactions](interactions.md) from `A`-`Z` but only [feeds](feeds.md) from `A`-`C`.
+`self` would load [interactions](interactions.md) from `A`-`Z` but [feeds](feeds.md) only from `A`-`C`.
 
 ## Functioning
 <!--stackedit_data:
@@ -29,6 +29,6 @@ Sjtcblx0RC0tPks7XG5cdEQtLT5MO1xuXHRELS0+TTtcblx0RS
 dEYtLT5SO1xuXHRHLS0+Uztcblx0Ry0tPlQ7XG5cdEgtLT5VO1
 xuXHRILS0+Vjtcblx0SS0tPlc7XG5cdEktLT5YO1xuXHRKLS0+
 WTtcblx0Si0tPlo7XG5gYGAiLCJjcmVhdGVkIjoxNjAxMTE5OD
-g3MDMyfX0sImhpc3RvcnkiOlstMTkxNjU0MTI4OSwtNzY4MDg4
-MDYsLTE1NjE1ODA4NTRdfQ==
+g3MDMyfX0sImhpc3RvcnkiOlstMTUxODkyMjE3NywtMTkxNjU0
+MTI4OSwtNzY4MDg4MDYsLTE1NjE1ODA4NTRdfQ==
 -->
