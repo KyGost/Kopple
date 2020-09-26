@@ -6,6 +6,7 @@ Format:
 	 - address (1) [address](address.md)
 	 - postIdentity (1) ?
 	 - type (1) string:option
+	 - posted (1) integer:time
 
 ## Types
 ### Like
@@ -16,5 +17,5 @@ Reposts, can be picked up as a feed item, depending on client settings
 ### Reply
 Replies to post, shows up under post if poster finds interaction
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUzMTAyMTMyOV19
+eyJoaXN0b3J5IjpbMTcyOTM1MDk5NF19
 -->
