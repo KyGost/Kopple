@@ -1,7 +1,15 @@
 # Structure
 ## Client
+Type: Directory
+Name: `client`
+Purpose: Houses client files
 ### Index
+Type: HTML
+Name: `index.html`
+Purpose: Structure of client
 ### Style
+Type: CSS
+Name: 
 ### Script
 ### Assets
 ## Store
@@ -21,5 +29,5 @@
 		 - interactions.json
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4Mjc3NTIxNzNdfQ==
+eyJoaXN0b3J5IjpbLTk0NDQ3MTA0MV19
 -->
