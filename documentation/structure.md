@@ -40,6 +40,10 @@ Purpose: See [feed](feed.md)
 Type: **J**ava**S**cript**O**bject**N**otation  
 Name: `interactions.json`  
 Purpose: See [interactions](interactions.md)
+### Self
+Type: **J**ava**S**cript**O**bject**N**otation  
+Name: `self.json`  
+Purpose: See [interactions](interactions.md)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTcxMDI4OTA4OV19
+eyJoaXN0b3J5IjpbLTk0NTQ0NjM1NF19
 -->
