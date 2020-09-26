@@ -1,7 +1,10 @@
+# Feed
+Uses [JSON](https://www.json.org/).
 
-
-
-> Written with [StackEdit](https://stackedit.io/).
+Format:
+ - post
+	 - id?
+	 - content
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzMwOTk4MTE2XX0=
+eyJoaXN0b3J5IjpbLTIxNDY0NjM5NTBdfQ==
 -->
