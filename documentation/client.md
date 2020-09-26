@@ -14,10 +14,12 @@ graph TD;
 	self-->A;
 	self-->B;
 	self-->C;
+	A-->self;
 	A-->D;
 	A-->E;
 	B-->F;
 	B-->G;
+	C-->self;
 	C-->H;
 	C-->I;
 	C-->J;
@@ -28,18 +30,20 @@ graph TD;
 	E-->O;
 	F-->P;
 	F-->Q;
-	G-->R;
+	F-->R;
 	G-->S;
-	H-->T;
-	H-->T;
-	I-->U;
-	I-->V;
-	J-->W;
-	J-->X;
+	G-->T;
+	H-->U;
+	H-->V;
+	I-->W;
+	I-->X;
+	J-->Y;
+	J-->Z;
+	O-->self
 ```
 
 ## Functioning
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk0MDk4ODc3OSwtNzY4MDg4MDYsLTE1Nj
-E1ODA4NTRdfQ==
+eyJoaXN0b3J5IjpbMTExMDI2NTQ0LC03NjgwODgwNiwtMTU2MT
+U4MDg1NF19
 -->
