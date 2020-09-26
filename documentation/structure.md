@@ -26,19 +26,19 @@ Purpose: Houses data
 ### Follows
 Type: **J**ava**S**cript**O**bject**N**otation
 Name: `follows.json`
-Purpose: See [follows](WIP.md)
+Purpose: See [follows](wip.md)
 ### Ignores
 Type: **J**ava**S**cript**O**bject**N**otation
 Name: `ignores.json`
-Purpose: See [ignores](WIP.md)
+Purpose: See [ignores](wip.md)
 ### Feed
 Type: **J**ava**S**cript**O**bject**N**otation
 Name: `feed.json`
-Purpose: See [feed](WIP.md)
+Purpose: See [feed](wip.md)
 ### Interactions
 Type: **J**ava**S**cript**O**bject**N**otation
 Name: `interactions.json`
-Purpose: See [interactions](WIP.md)
+Purpose: See [interactions](wip.md)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkxNzk2NDAxNV19
+eyJoaXN0b3J5IjpbMTA4MjEzMjE3N119
 -->
