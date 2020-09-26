@@ -7,7 +7,7 @@ Format:
 	 - reason (0|1) string:markdown
 
 ## Usage
-Each `user` will not be include
+Each `user` will not be included in the client's assessment. `address` will not be scanned. As such any posts, interactions, user trees or alike will *not* be attained.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwODE4NjM4NjhdfQ==
+eyJoaXN0b3J5IjpbLTE5NjEyNzM3NjVdfQ==
 -->
