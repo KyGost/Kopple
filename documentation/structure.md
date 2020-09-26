@@ -18,10 +18,13 @@ Purpose: Scripting of client
 ### Assets
 Type: Directory
 Name: `assets\`
-Purpose: Houses
+Purpose: Houses additional client files
 ## Store
-
+Type: Directory
+Name: `store\`
+Purpose: Houses data
 ### Follows
+Type: **J**ava**S**cript**O**bject**N**otation
 ### Ignores
 ### Feed
 ### Interactions
@@ -37,5 +40,5 @@ Purpose: Houses
 		 - interactions.json
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExMTc0ODU5MDZdfQ==
+eyJoaXN0b3J5IjpbODY1NzAzNjddfQ==
 -->
