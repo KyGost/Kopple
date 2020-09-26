@@ -10,11 +10,12 @@ Subscribes to [Center for Humane Technology](https://www.humanetech.com/)
 
 ## Aims
 ### User Interface
-The interface should be very simple. Not too much going on. Just relevant information.
-See 
+The interface should be very simple. Not too much going on. Just relevant information.  
+See [Patchwork](https://github.com/ssbc/patchwork) for an example.
+See [Client#Interface](client.md#interface for main article
 
 ## Documentation
 [Structure](structure.md) outlines the backend(?). [Client](client.md) outlines the functioning.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM5NzYwNzA2XX0=
+eyJoaXN0b3J5IjpbODk1NTIwOTQ1XX0=
 -->
