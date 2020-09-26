@@ -9,11 +9,13 @@ Posts are then filtered based on the address' filters (see [filters](filters.md)
 After filtering, interactions are added, these are gathered from the client's [`interactions`](interactions.md), [`follows`](follows.md)' addresses' [`interactions`](interactions.md), their [`follows`](follows.md)' addresses' [`interactions`](interactions.md) and so on.  
 The level of following to do is ideally set by a settings option, defaults to 3 (self, following, following, following).  
 
+```mermaid
+graph TD;
 
-
+```
 
 ## Functioning
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQzNjM0Nzc0MSwtNzY4MDg4MDYsLTE1Nj
-E1ODA4NTRdfQ==
+eyJoaXN0b3J5IjpbMTE2NDA3NTExLC03NjgwODgwNiwtMTU2MT
+U4MDg1NF19
 -->
