@@ -1,6 +1,15 @@
 # Structure
+## Client
+### Index
+### Style
+### Script
+### Assets
+## Store
+### Follows
+### Ignores
+### Feed
+### Interactions
 
- - ~
 	 - client
 		 - index.html
 		 - style.css
@@ -12,5 +21,5 @@
 		 - interactions.json
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NTIyMzU2NTVdfQ==
+eyJoaXN0b3J5IjpbLTE4Mjc3NTIxNzNdfQ==
 -->
