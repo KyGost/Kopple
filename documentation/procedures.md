@@ -10,7 +10,8 @@ Clicking the button will change it to a gray "`unfollow`" button and come up wit
 
 ## Function
 ### Following a user
-Searching for a user will [query the tree](wip.md) for a user witht
+Searching for a user will [query the tree](wip.md) for a user with the search term as their name.  
+Entering a "code" (an address) will scan t
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzkzNTY2MzUzXX0=
+eyJoaXN0b3J5IjpbLTM1ODc5ODM2MF19
 -->
