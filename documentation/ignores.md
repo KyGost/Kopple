@@ -1,10 +1,10 @@
-# Follows
+# Ignores
 Uses [JSON](https://www.json.org/).
 
 Format:
  - user
 	 - address
-	 - nickName
+	 - *reason*
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNTMwMTU5MjhdfQ==
+eyJoaXN0b3J5IjpbLTYyODUyMTA5M119
 -->
