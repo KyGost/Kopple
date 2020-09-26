@@ -9,7 +9,7 @@ Either will come up with a profile icon, profile name and a green "`follow`" but
 Clicking the button will change it to a gray "`unfollow`" button and come up with a prompt to host the user's page.
 
 ### Profile
-
+Clicking a user's name/profile icon will take you to their "profile". This 
 
 ## Function
 ### Following a user
@@ -18,5 +18,5 @@ Entering a "code" (an address) will scan the address and check for a self file. 
 
 Clicking follow will add the address to the [`follows`](follows.md) file and prompt user to host the address.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzNDgxNjg3NDddfQ==
+eyJoaXN0b3J5IjpbMTc1NTAzMjQ1NV19
 -->
