@@ -6,8 +6,9 @@ Format:
 	 - name (1) string
 	 - addresses (1) array:[address](address.md)
 
-## Identity
-See [self#Next Post Identity](self.md##next-post-identity)
+## Usage
+A filter is used to determine the target audience.
+The user can use the client to create a filter and assign users who are the intended 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQzMzExMTQ1MSwtODg3OTM1MDUzXX0=
+eyJoaXN0b3J5IjpbODY2NTM0NzEzLC04ODc5MzUwNTNdfQ==
 -->
