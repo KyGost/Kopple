@@ -5,7 +5,10 @@ Format:
  - self (1) object
 	 - name (1) string
 	 - description (1) string:markdown
-	 - nextIdentity
+	 - nextPostIdentity (1) integer
+
+## Next Post Identity
+Automatically assigned to new post and then incremented when new post is made.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2MjUwOTI2OTJdfQ==
+eyJoaXN0b3J5IjpbNDQ4ODEzOTAyXX0=
 -->
