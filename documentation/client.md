@@ -38,11 +38,11 @@ graph TD;
 	J-->Y;
 	J-->Z;
 ```
-
+![enter image description here](https://lh3.googleusercontent.com/pw/ACtC-3dIRO7vqORVtKok-LkgbemfzOLcYzOsLAp7x-7MfkyLan-vTMZ7b-2vFjOfnoEnMk1xDZ7EbVw6sW-VVCgPy9qaUkAaqx0fRe4tSJYmEQYx1sbkbsT-M20quRBw9hO-e2CQu_7u44UnJudXr9qXB91Diw=w1480-h436-no?authuser=0)
 `self` would load [interactions](interactions.md) from `A`-`Z` but only [feeds](feeds.md) from `A`-`C`.
 
 ## Functioning
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzOTY0Nzk4NDgsLTc2ODA4ODA2LC0xNT
-YxNTgwODU0XX0=
+eyJoaXN0b3J5IjpbMTg2MzI5OTE3NiwtNzY4MDg4MDYsLTE1Nj
+E1ODA4NTRdfQ==
 -->
