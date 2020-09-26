@@ -9,7 +9,11 @@ Format:
 
 ## Types
 ### Like
-
+-- Should this be react?
+### Repost
+Reposts, can be picked up as a feed item, depending on client settings
+### Reply
+Replies to post, shows up under post if poster finds interaction
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMjAxNjYyMDhdfQ==
+eyJoaXN0b3J5IjpbOTA1NDc0ODQ4XX0=
 -->
