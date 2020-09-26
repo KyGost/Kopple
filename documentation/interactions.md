@@ -5,7 +5,11 @@ Format:
  - interaction (0|>) object
 	 - address (1) [address](address.md)
 	 - postId (1) ?
-	 - nickName (0|1)
+	 - type (1) string:option
+
+## Types
+### Like
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwMTg3MjE0MjFdfQ==
+eyJoaXN0b3J5IjpbLTEzMjAxNjYyMDhdfQ==
 -->
