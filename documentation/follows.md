@@ -2,11 +2,10 @@
 Uses [JSON](https://www.json.org/).
 
 Format:
-
  - user
-	 - id
-	 - 
+	 - address
+	 - nickName
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjk0NDc4NjgzLDczMDk5ODExNl19
+eyJoaXN0b3J5IjpbLTU5NzQwNjUzOCw3MzA5OTgxMTZdfQ==
 -->
