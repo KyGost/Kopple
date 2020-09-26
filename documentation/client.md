@@ -11,11 +11,14 @@ The level of following to do is ideally set by a settings option, defaults to 3 
 
 ```mermaid
 graph TD;
-
+	self-->A;
+	self-->B;
+	self-->C;
+	
 ```
 
 ## Functioning
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTE2NDA3NTExLC03NjgwODgwNiwtMTU2MT
+eyJoaXN0b3J5IjpbODg0OTEyOTk0LC03NjgwODgwNiwtMTU2MT
 U4MDg1NF19
 -->
