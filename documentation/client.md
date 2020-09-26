@@ -14,11 +14,13 @@ graph TD;
 	self-->A;
 	self-->B;
 	self-->C;
+	A-->D;
+	A-->E;
 	
 ```
 
 ## Functioning
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODg0OTEyOTk0LC03NjgwODgwNiwtMTU2MT
+eyJoaXN0b3J5IjpbODc5MDg3OTMzLC03NjgwODgwNiwtMTU2MT
 U4MDg1NF19
 -->
