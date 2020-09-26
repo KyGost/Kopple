@@ -9,7 +9,7 @@ One that affects you only in ways you want to be affected.
 Subscribes to [Center for Humane Technology](https://www.humanetech.com/)
 
 ## Documentation
-See [structure](structure.md) as starting point
+[Structure](structure.md) outlines the backend(?). 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc5MDU0OTkyNV19
+eyJoaXN0b3J5IjpbNjUzOTAwMzkyXX0=
 -->
