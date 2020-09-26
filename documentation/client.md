@@ -16,11 +16,17 @@ graph TD;
 	self-->C;
 	A-->D;
 	A-->E;
-	
+	B-->F;
+	B-->G;
+	B-->H;
+	C-->H;
+	C-->I;
+	C-->J;
+	D-->;
 ```
 
 ## Functioning
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODc5MDg3OTMzLC03NjgwODgwNiwtMTU2MT
-U4MDg1NF19
+eyJoaXN0b3J5IjpbMTkzMTMzMzc3MywtNzY4MDg4MDYsLTE1Nj
+E1ODA4NTRdfQ==
 -->
