@@ -25,20 +25,20 @@ Name: `store\`
 Purpose: Houses data
 ### Follows
 Type: **J**ava**S**cript**O**bject**N**otation
+Name: `follows.json`
+Purpose: See [follows](WIP.md)
 ### Ignores
+Type: **J**ava**S**cript**O**bject**N**otation
+Name: `follows.json`
+Purpose: See [follows](WIP.md)
 ### Feed
+Type: **J**ava**S**cript**O**bject**N**otation
+Name: `follows.json`
+Purpose: See [follows](WIP.md)
 ### Interactions
-
-	 - client
-		 - index.html
-		 - style.css
-		 - script.js
-	 - store
-		 - follows.json
-		 - ignores.json
-		 - feed.json
-		 - interactions.json
-
+Type: **J**ava**S**cript**O**bject**N**otation
+Name: `follows.json`
+Purpose: See [follows](WIP.md)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODY1NzAzNjddfQ==
+eyJoaXN0b3J5IjpbNjY1NzA3OTk1XX0=
 -->
