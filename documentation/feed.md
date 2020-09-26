@@ -3,7 +3,7 @@ Uses [JSON](https://www.json.org/).
 
 Format:
  - post (0|>) object
-	 - identity (1) ?
+	 - identity (1) integer
 	 - content (1) string:markdown
 
 ## ID
@@ -17,5 +17,5 @@ Store next post identity in self?
 ### Hashing perhaps?
 This wouldn't work. Posts should be mutable.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI3MDQxNDE4MiwxNjk5NTEwMjU4XX0=
+eyJoaXN0b3J5IjpbLTEyNDExNjk3NTUsMTY5OTUxMDI1OF19
 -->
