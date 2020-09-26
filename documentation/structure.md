@@ -29,16 +29,16 @@ Name: `follows.json`
 Purpose: See [follows](WIP.md)
 ### Ignores
 Type: **J**ava**S**cript**O**bject**N**otation
-Name: `follows.json`
-Purpose: See [follows](WIP.md)
+Name: `ignores.json`
+Purpose: See [ignores](WIP.md)
 ### Feed
 Type: **J**ava**S**cript**O**bject**N**otation
-Name: `follows.json`
-Purpose: See [follows](WIP.md)
+Name: `feed.json`
+Purpose: See [feed](WIP.md)
 ### Interactions
 Type: **J**ava**S**cript**O**bject**N**otation
-Name: `follows.json`
-Purpose: See [follows](WIP.md)
+Name: `interactions.json`
+Purpose: See [interactions](WIP.md)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjY1NzA3OTk1XX0=
+eyJoaXN0b3J5IjpbLTkxNzk2NDAxNV19
 -->
