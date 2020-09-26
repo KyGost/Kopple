@@ -14,12 +14,10 @@ graph TD;
 	self-->A;
 	self-->B;
 	self-->C;
-	A-->self;
 	A-->D;
 	A-->E;
 	B-->F;
 	B-->G;
-	C-->self;
 	C-->H;
 	C-->I;
 	C-->J;
@@ -39,11 +37,11 @@ graph TD;
 	I-->X;
 	J-->Y;
 	J-->Z;
-	O-->self
 ```
+`self` would load interactions
 
 ## Functioning
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTExMDI2NTQ0LC03NjgwODgwNiwtMTU2MT
+eyJoaXN0b3J5IjpbMTI3Nzg4NDAzLC03NjgwODgwNiwtMTU2MT
 U4MDg1NF19
 -->
