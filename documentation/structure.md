@@ -6,8 +6,11 @@
 		 - style.css
 		 - script.js
 	 - store
-		 - 
+		 - follows.json
+		 - ignores.json
+		 - feed.json
+		 - interactions.json
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTg2NTc0NDkwXX0=
+eyJoaXN0b3J5IjpbLTE2NTIyMzU2NTVdfQ==
 -->
