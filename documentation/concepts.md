@@ -1,5 +1,7 @@
 # Concepts
 ## Querying the tree
+**Alias**: Crawl
+
 Querying the tree is how the client gets data from other clients.
 
 Each client has an address. This address is where their data is stored. One of the pieces of data stored is the [`follows`](follows.md) file; this file lists other users.
@@ -18,5 +20,5 @@ The level of following to do is ideally set by a settings option and defaults to
 Means: Hosted location of any user in the web.  
 On the basis of [beaker](https://beaker.dev/), hyper:// hosting location of a client.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDk5NzE0ODk3LDk1MzkzNTUxOV19
+eyJoaXN0b3J5IjpbNDcyMTUyODcwLDk1MzkzNTUxOV19
 -->
