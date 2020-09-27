@@ -31,10 +31,10 @@ Read as: feedNewPost: Post
 Gathers values from #feedNewPost, puts them in an object and appends that object to [`feed`](feed.md), see [appendToFile](wip.md).
 #### Value transformation
 Gets feedNewPostID + `Content`,`Tags`,`Filters`.  
-`Tags` and `Filters` are converted to arrays via [arrayFromCSV](wip.md).
+`Tags` and `Filters` are converted to arrays via [arrayFromCSV](wip.md).  
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTQ0NTI1MDUxLC04MDExNzE1MzYsMzA5OT
-k2ODhdfQ==
+eyJoaXN0b3J5IjpbLTIxMTIzMjMyNjksLTgwMTE3MTUzNiwzMD
+k5OTY4OF19
 -->
