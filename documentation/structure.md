@@ -62,8 +62,7 @@ Purpose: See [filters](filters.md)
 ## Cache
 Type: Directory  
 Name: `cache\`  
-Purpose: Not certain if this should be implemented. Potentially, crawls will store data here, enabling offline use.
+Purpose: Not certain if this should be implemented. Potentially, [crawls](concepts.md#querying-the-tree) will store data here, enabling offline use.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3ODkxNjQyMTEsLTE5NTE1ODk0MTZdfQ
-==
+eyJoaXN0b3J5IjpbMTA1MDc0MzEyNiwtMTk1MTU4OTQxNl19
 -->
