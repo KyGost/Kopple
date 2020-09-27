@@ -1,0 +1,12 @@
+.new textarea {
+  width: 80%;
+}
+#feed {
+  width: 40%;
+  height: 100%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+#feedNewPostText {
+  height: 15%;
+}
