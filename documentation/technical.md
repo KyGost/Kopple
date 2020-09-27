@@ -25,12 +25,14 @@ The new post feature contains interactive elements:
 
 ## Utilities
 ### appendToFile
-```ja
+```
 appendToFile(
 	String file,
 	Object object
 )
 ```
+#### Usage
+Checks if `file` is within [`acceptedFiles`](wip.md)
 
 ## Functionality
 ### feedNewPostPost
@@ -44,6 +46,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY3ODg3NTgwOSwtODAxMTcxNTM2LDMwOT
-k5Njg4XX0=
+eyJoaXN0b3J5IjpbLTEzNzA3MjYwODQsLTgwMTE3MTUzNiwzMD
+k5OTY4OF19
 -->
