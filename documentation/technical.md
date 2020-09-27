@@ -41,18 +41,17 @@ locationFromFile(
 Checks `file` to ensure it is listed in [`acceptedFiles`](technical.md#acceptedFiles) then returns "/store/`file`.json".
 
 ### selfAsFollow
-`selfAsFollow()`
-
-
-### appendToFile
-```
-appendToFile(
-	String file,
-	Object object
-)
-```
+`selfAsFollow()`  
+Returns a follow object using client [address](address.md).
 
 ### readFromFile
+```
+readToFile(
+	String file
+) -> 
+```
+
+### appendToFile
 ```
 appendToFile(
 	String file,
@@ -83,6 +82,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA2MjQ0MjIzNiwtMTM3MDcyNjA4NCwtOD
+eyJoaXN0b3J5IjpbMTIzNzMxNzIwOCwtMTM3MDcyNjA4NCwtOD
 AxMTcxNTM2LDMwOTk5Njg4XX0=
 -->
