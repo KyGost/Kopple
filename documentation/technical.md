@@ -30,8 +30,9 @@ Read as: feedNewPost: Post
 #### Usage
 Gathers values from #feedNewPost, puts them in an object and appends that object to [`feed`](feed.md), see [appendToFile](wip.md).
 #### Value transformation
-Gets feedNewPostID + `Content`,
+Gets feedNewPostID + `Content`,`Tags`,`Filters`.  
+`Tags` and `Filters` are converted to arrays via [arrayFromCSV](wip.md).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTg3NTI1ODE0LC04MDExNzE1MzYsMzA5OT
-k2ODhdfQ==
+eyJoaXN0b3J5IjpbLTExNzU2ODg5NzMsLTgwMTE3MTUzNiwzMD
+k5OTY4OF19
 -->
