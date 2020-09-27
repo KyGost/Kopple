@@ -24,6 +24,29 @@ The new post feature contains interactive elements:
 ## Constants
 
 ## Utilities
+### arrayFromCSV
+```
+arrayFromCSV(
+	String CSV
+)
+```
+
+### locationFromFile
+```
+locationFromFile(
+	String file
+)
+```
+#### Usage
+Checks fi
+
+### selfAsFollow
+```
+appendToFile(
+	String file,
+	Object object
+)
+```
 
 ### appendToFile
 ```
@@ -64,6 +87,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyODczNjA0MzEsLTEzNzA3MjYwODQsLT
+eyJoaXN0b3J5IjpbLTE4NTUyMzEzNzMsLTEzNzA3MjYwODQsLT
 gwMTE3MTUzNiwzMDk5OTY4OF19
 -->
