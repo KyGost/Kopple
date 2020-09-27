@@ -48,7 +48,7 @@ Returns a follow object using client [address](address.md).
 ```
 readToFile(
 	String file
-) -> 
+) -> Object
 ```
 
 ### appendToFile
@@ -66,9 +66,8 @@ appendToFile(
 	Object object
 )
 ```
-
 #### Usage
-Checks if `file` is within [`acceptedFiles`](wip.md)
+Checks if `file` is within [`acceptedFiles`](technical.md#acceptedFiles)
 
 ## Functionality
 ### feedNewPostPost
@@ -82,6 +81,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIzNzMxNzIwOCwtMTM3MDcyNjA4NCwtOD
-AxMTcxNTM2LDMwOTk5Njg4XX0=
+eyJoaXN0b3J5IjpbLTE1Njg5MjE4OTUsLTEzNzA3MjYwODQsLT
+gwMTE3MTUzNiwzMDk5OTY4OF19
 -->
