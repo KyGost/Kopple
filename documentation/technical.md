@@ -15,11 +15,11 @@ The feed's new post feature is a `div` with ID `feedNewPost` and classes `new`, 
 The new post feature contains interactive elements:
 |Description|Tag|Component|Classes|
 |:-:|:-:|:-:|:-:|
-|Text Area|textarea|Text|-|
+|Text Area|textarea|Content|-|
 |Post Button|button|-|-|
 |Tags|input:text|Tags|-|
 |Filters|input:text|Filters|-|
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzA5OTk2ODhdfQ==
+eyJoaXN0b3J5IjpbLTgwMTE3MTUzNiwzMDk5OTY4OF19
 -->
