@@ -22,7 +22,16 @@ The new post feature contains interactive elements:
 
 # JavaScript
 ## Constants
+
 ## Utilities
+### appendToFile
+```ja
+appendToFile(
+	String file,
+	Object object
+)
+```
+
 ## Functionality
 ### feedNewPostPost
 Read as: feedNewPost: Post  
@@ -35,6 +44,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxMTIzMjMyNjksLTgwMTE3MTUzNiwzMD
-k5OTY4OF19
+eyJoaXN0b3J5IjpbLTY3ODg3NTgwOSwtODAxMTcxNTM2LDMwOT
+k5Njg4XX0=
 -->
