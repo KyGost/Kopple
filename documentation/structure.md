@@ -14,6 +14,16 @@ Type: Directory
 Name: `assets\`  
 Purpose: Houses additional client files
 
+#### Style
+Type: CSS  
+Name: `style.css`  
+Purpose: Stylesheet of client
+
+#### Script
+Type: JavaScript  
+Name: `script.js`  
+Purpose: Scripting of client
+
 ## Store
 Type: Directory  
 Name: `store\`  
@@ -54,5 +64,5 @@ Type: Directory
 Name: `cache\`  
 Purpose: Not certain if this should be implemented. Potentially, [crawls](concepts.md#querying-the-tree) will store data here, enabling offline use.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODU4ODk4MDM5LC0xOTUxNTg5NDE2XX0=
+eyJoaXN0b3J5IjpbMTc3NTEwNTMyNCwtMTk1MTU4OTQxNl19
 -->
