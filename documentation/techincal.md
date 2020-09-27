@@ -13,10 +13,13 @@ The feed contains the new post feature and feed items.
 
 The feed's new post feature is a `div` with ID `feedNewPost` and classes `new`, `newPost`.
 The new post feature contains interactive elements:
-|Description|Tag|ID|Classes|
+|Description|Tag|Component|Classes|
 |:-:|:-:|:-:|:-:|
-|Text Area|textarea|feedNewPostText|`new`,`newPost`|
+|Text Area|textarea|Text|-|
+|Post Button|button|-|-|
+|Tag|textarea|Tags|-|
+|Text Area|textarea|Tags|-|
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk1MDgyMzE0OV19
+eyJoaXN0b3J5IjpbOTc5MTQ2NTU4XX0=
 -->
