@@ -1,6 +1,10 @@
 # Client
 ## Preface
-Child elements may inherit part of their ID, if this is the case I will say "the appended 
+Child elements may inherit part of their ID, if this is the case I will say 'the appended ID component is (x)' for brevity I will say "component:(x)".
+Example:
+Feed component:`feed` (does not have children so ID: `feed`)
+Feed component:`feed` (does not have children so ID: `feed`)
+Feed component:`feed` (does not have children so ID: `feed`)
 ## Feed page
 ### Feed
 The feed is a `div` with ID `feed` and with class `socialArea`.  
@@ -13,5 +17,5 @@ The new post feature contains interactive elements:
 |Text Area|textarea|feedNewPostText|`new`,`newPost`|
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI5MDA5OTA4N119
+eyJoaXN0b3J5IjpbODQyNzc4ODU0XX0=
 -->
