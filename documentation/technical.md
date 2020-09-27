@@ -27,8 +27,11 @@ The new post feature contains interactive elements:
 ### feedNewPostPost
 Read as: feedNewPost: Post  
 `feedNewPostPost()`  
-Usage: Gathers values from #feedNewPost, puts them in an object and appends that object to [`feed`](feed.md), see appendToFile
+#### Usage
+Gathers values from #feedNewPost, puts them in an object and appends that object to [`feed`](feed.md), see [appendToFile](wip.md).
+#### Value transformation
+Gets feedNewPostID + `Content`,
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc4OTk4MzM0NiwtODAxMTcxNTM2LDMwOT
-k5Njg4XX0=
+eyJoaXN0b3J5IjpbOTg3NTI1ODE0LC04MDExNzE1MzYsMzA5OT
+k2ODhdfQ==
 -->
