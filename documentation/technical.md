@@ -21,8 +21,13 @@ The new post feature contains interactive elements:
 |Filters|input:text|Filters|-|
 
 # JavaScript
-##  Constants
+## Constants
+## Utilities
+## Functionality
+### feedNewPostPost
+Read as: feedNewPost: Post
+Par
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNTkwMTE0OSwtODAxMTcxNTM2LDMwOT
-k5Njg4XX0=
+eyJoaXN0b3J5IjpbLTExMTU3MTYwMTAsLTgwMTE3MTUzNiwzMD
+k5OTY4OF19
 -->
