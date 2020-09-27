@@ -20,6 +20,9 @@ The new post feature contains interactive elements:
 |Tags|input:text|Tags|-|
 |Filters|input:text|Filters|-|
 
+# JavaScript
+##  Constants
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgwMTE3MTUzNiwzMDk5OTY4OF19
+eyJoaXN0b3J5IjpbLTEwNTkwMTE0OSwtODAxMTcxNTM2LDMwOT
+k5Njg4XX0=
 -->
