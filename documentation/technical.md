@@ -26,10 +26,12 @@ The new post feature contains interactive elements:
 Current value: feed
 
 ### feedNewPostID
-Current value: `feedID`+
+Current value: `feedID` + NewPost
 
 ### acceptedFiles
-Current value: feed
+Current value: follows, ignores, feed, interactions, self, filters
+Is: Reference list of store files (see
+
 
 ## Utilities
 ### arrayFromCSV
@@ -88,6 +90,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxMTc2MDMxNDAsLTEzNzA3MjYwODQsLT
+eyJoaXN0b3J5IjpbLTE1MTkwNDI1OTAsLTEzNzA3MjYwODQsLT
 gwMTE3MTUzNiwzMDk5OTY4OF19
 -->
