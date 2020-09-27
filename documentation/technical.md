@@ -22,7 +22,14 @@ The new post feature contains interactive elements:
 
 # JavaScript
 ## Constants
+### feedID
+Current value: feed
 
+### feedNewPostID
+Current value: `feedID`+
+
+### acceptedFiles
+Current value: feed
 
 ## Utilities
 ### arrayFromCSV
@@ -81,6 +88,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDY2NzkwOTMxLC0xMzcwNzI2MDg0LC04MD
-ExNzE1MzYsMzA5OTk2ODhdfQ==
+eyJoaXN0b3J5IjpbLTIxMTc2MDMxNDAsLTEzNzA3MjYwODQsLT
+gwMTE3MTUzNiwzMDk5OTY4OF19
 -->
