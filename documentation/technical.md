@@ -61,13 +61,12 @@ appendToFile(
 
 ### crawl
 ```
-appendToFile(
-	String file,
-	Object object
-)
+crawl(
+	Integer distance
+) -> Promise
 ```
 #### Usage
-Checks if `file` is within [`acceptedFiles`](technical.md#acceptedFiles)
+See 
 
 ## Functionality
 ### feedNewPostPost
@@ -81,6 +80,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1Njg5MjE4OTUsLTEzNzA3MjYwODQsLT
+eyJoaXN0b3J5IjpbLTE1NTQxNDMxMzcsLTEzNzA3MjYwODQsLT
 gwMTE3MTUzNiwzMDk5OTY4OF19
 -->
