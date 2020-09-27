@@ -17,9 +17,9 @@ The new post feature contains interactive elements:
 |:-:|:-:|:-:|:-:|
 |Text Area|textarea|Text|-|
 |Post Button|button|-|-|
-|Tag|textarea|Tags|-|
-|Text Area|textarea|Tags|-|
+|Tags|input:text|Tags|-|
+|Filters|input:text|Filters|-|
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTc5MTQ2NTU4XX0=
+eyJoaXN0b3J5IjpbMzA5OTk2ODhdfQ==
 -->
