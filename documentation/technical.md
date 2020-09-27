@@ -25,9 +25,10 @@ The new post feature contains interactive elements:
 ## Utilities
 ## Functionality
 ### feedNewPostPost
-Read as: feedNewPost: Post
-Par
+Read as: feedNewPost: Post  
+`feedNewPostPost()`  
+Usage: Gathers values from #feedNewPost, puts them in an object and appends that object to [`feed`](feed.md), see appendToFile
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExMTU3MTYwMTAsLTgwMTE3MTUzNiwzMD
-k5OTY4OF19
+eyJoaXN0b3J5IjpbMTc4OTk4MzM0NiwtODAxMTcxNTM2LDMwOT
+k5Njg4XX0=
 -->
