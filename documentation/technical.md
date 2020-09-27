@@ -38,7 +38,7 @@ locationFromFile(
 )
 ```
 #### Usage
-Checks fi
+Checks `file` to ensure it is listed in [`acceptedFiles`](technical.md#acceptedFiles) then returns "/store/`file`.json".
 
 ### selfAsFollow
 ```
@@ -87,6 +87,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4NTUyMzEzNzMsLTEzNzA3MjYwODQsLT
+eyJoaXN0b3J5IjpbLTE4MDAxMDA1OTEsLTEzNzA3MjYwODQsLT
 gwMTE3MTUzNiwzMDk5OTY4OF19
 -->
