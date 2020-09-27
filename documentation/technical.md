@@ -23,6 +23,7 @@ The new post feature contains interactive elements:
 # JavaScript
 ## Constants
 
+
 ## Utilities
 ### arrayFromCSV
 ```
@@ -66,7 +67,7 @@ crawl(
 ) -> Promise
 ```
 #### Usage
-See 
+See [query the tree](concepts.md#querying-the-tree).
 
 ## Functionality
 ### feedNewPostPost
@@ -80,6 +81,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NTQxNDMxMzcsLTEzNzA3MjYwODQsLT
-gwMTE3MTUzNiwzMDk5OTY4OF19
+eyJoaXN0b3J5IjpbNDY2NzkwOTMxLC0xMzcwNzI2MDg0LC04MD
+ExNzE1MzYsMzA5OTk2ODhdfQ==
 -->
