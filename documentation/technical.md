@@ -30,8 +30,8 @@ Current value: `feedID` + NewPost
 
 ### acceptedFiles
 Current value: follows, ignores, feed, interactions, self, filters
-Is: Reference list of store files (see
 
+Is: Reference list of store files (see [structure](structure.md))
 
 ## Utilities
 ### arrayFromCSV
@@ -90,6 +90,6 @@ Gets feedNewPostID + `Content`,`Tags`,`Filters`.
 Gets nextIdentity value from [`self`](self.md).  
 Gets current systime using `new Date().getTime()`.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MTkwNDI1OTAsLTEzNzA3MjYwODQsLT
+eyJoaXN0b3J5IjpbLTE5MTEwOTg4MDksLTEzNzA3MjYwODQsLT
 gwMTE3MTUzNiwzMDk5OTY4OF19
 -->
