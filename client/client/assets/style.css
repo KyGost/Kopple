@@ -1,0 +1,122 @@
+body {
+  background: #434141;
+  color: #ccc;
+  font-family: system-ui, sans-serif;
+  font-size: 120%;
+}
+.dropdown {
+  display: none;
+  position: relative;
+  float: right;
+  background: #ccc;
+  color: #434141;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+} button:focus+.dropdown, .dropdown:hover {
+  display: initial;
+} .dropdown>.dropdown-item {
+  padding: 3px;
+} .dropdown>.dropdown-item:not(:first-child) {
+  border-top: solid #434141 1px;
+} .dropdown-item:hover {
+  background: #aaa;
+}
+.new {
+  background: #383736;
+  width: 100%;
+}
+.new textarea {
+  background: inherit;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  width: 98%;
+  padding: 1%;
+  margin: 0;
+  border: none;
+  resize: vertical;
+  height: 50px;
+  transition: height .15s ease-in;
+} .new textarea:focus {
+  height: 300px;
+  transition: height .25s ease-out;
+}
+#feed {
+  width: 40%;
+  height: 100%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+#feedNewPostText {
+  height: 15%;
+}
+.post {
+  background: #383736;
+  padding: 2%;
+  margin-bottom: 2%;
+  width: 96%;
+  display: block;
+  font-size: 120%;
+  color: inherit;
+  border: none;
+} .post .content {
+  overflow: hidden;
+  display: block;
+} .post .content[contenteditable] {
+  margin-top: 4%;
+  resize: vertical;
+  box-sizing: border-box;
+  border: solid 1px #666;
+  background: #424140;
+} .post .content[contenteditable] + .interact {
+  display: none;
+}
+
+.post .headline {
+  display: inline;
+} .post .poster {
+  font-weight: bold;
+} .post .posted {
+  font-size: 80%;
+  font-weight: lighter;
+} .post .posted::before {
+  content: ' - ';
+}
+
+.posted .date {
+  display: none;
+}.posted:hover .relative {
+  display: none;
+} .posted:hover .date {
+  display: initial;
+}
+
+.post .interact, .post .buttons {
+  display: flex;
+} .post .interact button, .post .buttons button { /* TODO: Text gets verically misaligned */
+  font-size: 70%;
+  padding: 1%;
+  margin: 1%;
+  background: #222;
+  border: none;
+  color: inherit;
+  border-radius: 10px;
+}
+
+.post img {
+  height: auto;
+  width: 95%;
+  padding: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.alterPostButton {
+  float: right;
+  display: inline;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: 150%;
+}
