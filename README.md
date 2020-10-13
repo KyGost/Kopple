@@ -1,5 +1,5 @@
 # KyWeb
-Peer to Peer Social Network for Beaker/Hyper
+Peer to Peer Social Network for build on Hyperdrive technology (access via Beaker (todo: Agregore))
 
 See [main](documentation/main.md).
 
