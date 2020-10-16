@@ -1,9 +1,16 @@
-body {
-  background: #434141;
-  color: #ccc;
-  font-family: system-ui, sans-serif;
-  font-size: 120%;
+/* Utility */
+.textarea[contenteditable],.post .content[contenteditable] {
+  box-sizing: border-box;
+  border: solid 1px #666;
+  background: #424140;
+  overflow: hidden;
+} .textarea[contenteditable]:empty::before {
+    content: attr(placeholder);
+    color: #555; 
+} .textarea[contenteditable]:empty:focus::before {
+    content: "";
 }
+
 .dropdown {
   display: none;
   position: relative;
@@ -23,22 +30,78 @@ body {
   background: #aaa;
 }
 
-.textarea[contenteditable],.post .content[contenteditable] {
-  box-sizing: border-box;
-  border: solid 1px #666;
-  background: #424140;
-  overflow: hidden;
-} .textarea[contenteditable]:empty::before {
-    content: attr(placeholder);
-    color: #555; 
-} .textarea[contenteditable]:empty:focus::before {
-    content: "";
+/* Dialog */
+.dialog {
+  position: fixed;
+  top: 30%;
+  bottom: 30%;
+  left: 30%;
+  right: 30%;
+  height: 30%;
+  width: 30%;
+  background: #222;
+  padding: 2%;
 }
 
-.new {
-  background: #383736;
-  width: 100%;
+.identity {
+  display: inline-flex;
 }
+
+.whowhen>* {
+  display: block;
+  white-space: nowrap;
+}
+
+.avatar {
+  border-radius: 30%;
+  margin: 0.2em;
+} .post>.identity>.avatar {
+  height: 2em;
+  width: 2em;
+} .comment>.identity>.avatar {
+  height: 0.9em;
+  width: 0.9em;
+}
+
+/* Core */
+body {
+  background: #434141;
+  color: #ccc;
+  font-family: system-ui, sans-serif;
+  font-size: 120%;
+}
+
+/* Menu */
+#menu {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 98%;
+  width: 5%;
+  margin: 1%;
+} #menu>* {
+  width: 100%;
+  padding-bottom: 100%;
+  background: #383736;
+  border: black 1px solid;
+  border-radius: 100%;
+} #menu>*>* {
+  position: absolute;
+  width: 80%;
+  padding: 10%;
+}
+
+/* Feed */
+#feed {
+  width: 40%;
+  height: 100%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+#feedNewPostText {
+  height: 15%;
+}
+
 .new #feedNewPostContent {
   width: 100%;
   margin-top: 4%;
@@ -56,15 +119,13 @@ body {
   height: 300px;
   transition: height .25s ease-out;
 }
-#feed {
-  width: 40%;
-  height: 100%;
-  margin-left: 15%;
-  margin-right: 15%;
+
+.new {
+  background: #383736;
+  width: 100%;
 }
-#feedNewPostText {
-  height: 15%;
-}
+
+/* Posts */
 .post {
   background: #383736;
   padding: 2%;
@@ -81,15 +142,11 @@ body {
   display: none;
 }
 
-.post .headline {
-  display: inline;
-} .post .poster {
+.post .poster {
   font-weight: bold;
 } .post .posted {
   font-size: 80%;
   font-weight: lighter;
-} .post .posted::before {
-  content: ' - ';
 }
 
 .posted .date {
@@ -137,7 +194,7 @@ body {
   content: ': ';
 }
 
-.post img {
+.post .content img {
   height: auto;
   width: 95%;
   padding: 2%;

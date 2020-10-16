@@ -11,7 +11,8 @@ const acceptedFiles = [
   'self',
   'filters',
 ];
-const unnamedUserName = 'Unknown';
+const defaultName = 'Unknown';
+const defaultAvatar = "data:image/svg+xml;utf8,<svg width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-person-fill' fill='white' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/></svg>";
 const updateDrive = 'hyper://30d044bc74fe45b5a8c81c4cbeb7081e1ac2f30d9c0c09e0b0d68a07e9c084e6';
 const refreshInterval = 60 * 1000;
 const markdownConverter = new showdown.Converter();
@@ -204,6 +205,79 @@ window.addEventListener('load', () => {
     console.log('SW Registration failed: ' + error);
 	});
 });
+
+function menuFollow() {
+  let found = newElement(
+    'newFollowFound',
+    'p'
+  )
+  let title = newElement(
+    'dialogTitle',
+    'h2',
+    'Follow user'
+  );
+  let notes = newElement(
+    'dialogNotes',
+    'p',
+    'Enter an address below'
+  )
+  let input = newElement(
+    'dialogInput',
+    'input',
+    undefined,
+    {type: 'text', placeholder: '833d719039176d2803dcb76576684864953e2550760209b76183054841471fda'},
+    element => element.addEventListener('keyup', () => {
+      fetch('hyper://' + element.value + '/store/self.json')
+        .then(result => result.json()
+          .then(json => {
+            found.innerText = json[0].name;
+          })
+        ).catch(error => {
+          found.innerText = 'User not found';
+        })
+    })
+  )
+  let buttons = newElement(
+    'dialogButtons',
+    'div',
+    [
+      newElement(
+        'dialogDone',
+        'button',
+        'Follow',
+        undefined,
+        (element) => element.addEventListener('click', () => {
+          store.files.follows.push({
+            address: input.value
+          })
+          store.saveFiles();
+          document.body.removeChild(dialog);
+        })
+      ),
+      newElement(
+        'dialogCancel',
+        'button',
+        'Cancel',
+        undefined,
+        element => element.addEventListener('click', () => document.body.removeChild(dialog))
+      )
+    ]
+  )
+  
+  let dialog = newElement(
+    'dialog',
+    'div',
+    [
+      title,
+      notes,
+      input,
+      found,
+      buttons
+    ]
+  )
+  document.body.appendChild(dialog);
+}
+
 function onStart() {
   if(window.location.hash === '#NEWINSTALL') {
     resetFiles();
@@ -258,25 +332,25 @@ async function feedLoad() {
   var interactions = [];
   Object.keys(store.knowledgeBase).forEach((address) => {
     let knowledge = store.knowledgeBase[address];
+    let self = (knowledge.self || [])[0] || {name: defaultName, avatar: defaultAvatar};
+    let name = self.name || defaultName,
+      avatar = self.avatar || defaultAvatar;
+    poster = {
+      address: address,
+      name: name,
+      avatar: avatar
+    };
+    
     if(knowledge.self) {
-      let name;
-      try {
-        if(knowledge.self[0].name !== undefined) name = knowledge.self[0].name;
-        else name = unnamedUserName;
-      } catch (error) {
-        name = unnamedUserName;
-      }
       knowledge.feed.forEach(post => {
         posts.push({
-          posterAddress: address,
-          posterName: name,
+          poster: poster,
           ...post
         });
       });
       knowledge.interactions.forEach(interaction => {
         interactions.push({
-          posterAddress: address,
-          posterName: name,
+          poster: poster,
           ...interaction
         });
       });
@@ -296,7 +370,7 @@ function feedLoadPosts(posts) {
 
   posts.forEach(post => {
     let options = [];
-    if(post.posterAddress === location.hostname) options.push(newElement(
+    if(post.poster.address === location.hostname) options.push(newElement(
       'dropdown-item',
       'li',
       'Edit',
@@ -348,7 +422,7 @@ function feedLoadPosts(posts) {
         });
       }
     ));
-    if(post.posterAddress === location.hostname) options.push(newElement(
+    if(post.poster.address === location.hostname) options.push(newElement(
       'dropdown-item',
       'li',
       'Delete',
@@ -367,27 +441,39 @@ function feedLoadPosts(posts) {
       'div',
       [
         newElement(
-          'headline',
+          'identity',
           'div',
           [
             newElement(
-              'poster',
-              'span',
-              post.posterName
+              'avatar',
+              'img',
+              undefined,
+              {src: post.poster.avatar}
             ),
             newElement(
-              'posted',
-              'span',
+              'whowhen',
+              'div',
               [
                 newElement(
-                  'relative',
+                  'poster',
                   'span',
-                  formatDateDifference(post.posted)
+                  post.poster.name
                 ),
                 newElement(
-                  'date',
+                  'posted',
                   'span',
-                  dtf.format(post.posted)
+                  [
+                    newElement(
+                      'relative',
+                      'span',
+                      formatDateDifference(post.posted)
+                    ),
+                    newElement(
+                      'date',
+                      'span',
+                      dtf.format(post.posted)
+                    )
+                  ]
                 )
               ]
             )
@@ -475,7 +561,7 @@ function feedLoadPosts(posts) {
           ]
         )
       ],
-      {id: ['post', post.posterAddress, post.identity].join('-')}
+      {id: ['post', post.poster.address, post.identity].join('-')}
     ));
   });
 }
@@ -515,9 +601,21 @@ function feedLoadComments(comments) {
           'div',
           [
             newElement(
-              'name',
+              'identity',
               'span',
-              comment.posterName
+              [
+                newElement(
+                  'avatar',
+                  'img',
+                  undefined,
+                  {src: comment.poster.avatar}
+                ),
+                newElement(
+                  'name',
+                  'span',
+                  comment.poster.name
+                )
+              ]
             ),
             newElement(
               'content',
