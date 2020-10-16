@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>KyWeb Client</title>
+    <title>Kopple Client</title>
     <link rel="stylesheet" href="assets/style.css"/>
+    <script src="assets/showdown.min.js"></script>
     <script src="assets/script.js"></script>
   </head>
   <body onload='onStart()'>
     <div id="feed">
       <div id="feedNewPost" class="new newPost">
-        <textarea id="feedNewPostContent" placeholder="Write a new post"></textarea>
-        <p><button onclick="feedNewPostPost()">Post</button><input type=text id="feedNewPostTags"/><input type=text id="feedNewPostFilters"/></p>
+        <div id="feedNewPostContent" class="textarea" contenteditable="true" placeholder="<M⬇> Write a new post"></div>
+        <p><button onclick="feedNewPostPost()">Post</button><input type="text" id="feedNewPostTags" placeholder="Tags seperated by ,"/><input type="text" id="feedNewPostFilters" placeholder="Filters seperated by ," disabled/></p>
       </div>
     </div>
   </body>

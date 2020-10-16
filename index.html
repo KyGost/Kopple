@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kopple Install</title>
+		<script type="text/javascript">
+			async function install() {
+				let newHyperdrive = await beaker.hyperdrive.createDrive({
+					title: 'Kopple'
+				});
+				let resultsA = await beaker.hyperdrive.query({
+					path: '/client/*',
+					type: 'file'
+				})
+				let resultsB = await beaker.hyperdrive.query({
+					path: '/client/*/*',
+					type: 'file'
+				})
+				let results = resultsA.concat(resultsB);
+				console.log(results)
+				for(var i = 0; i < results.length; i++) {
+					let file = results[i].path;
+					let read = await beaker.hyperdrive.readFile(file)
+					console.log('Installing ' + file);
+					await beaker.hyperdrive.writeFile(newHyperdrive.url + file, read);
+				}
+				window.location.replace(newHyperdrive.url + 'client/#NEWINSTALL');
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Install Kopple</h1>
+		<p>
+			In order to install Kopple, all you need to do is click the button!
+			Upon clicking, you should be taken to your new page! Once you're there, you should bookmark it.
+		</p>
+		<button onclick='install()'>INSTALL</button>
+	</body>
+</html>
