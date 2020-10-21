@@ -1,8 +1,23 @@
+@import "./styles/scrollbar.css";
+@import "./styles/post.css";
+@import "./styles/miscellaneous.css";
+
+/* Colors */
+:root {
+  --background: #434141;
+  --text: #ccc;
+  --feature: #383736;
+  --disabled: #444;
+  --buttonBackground: #000;
+  --darkBackground: #222;
+  --lightFeature: #aaa;
+}
+
 /* Utility */
 .textarea[contenteditable],.post .content[contenteditable] {
   box-sizing: border-box;
   border: solid 1px #666;
-  background: #424140;
+  background: var(--background);
   overflow: hidden;
 } .textarea[contenteditable]:empty::before {
     content: attr(placeholder);
@@ -15,8 +30,8 @@
   display: none;
   position: relative;
   float: right;
-  background: #ccc;
-  color: #434141;
+  background: var(--text);
+  color: var(--background);
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -25,9 +40,9 @@
 } .dropdown>.dropdown-item {
   padding: 3px;
 } .dropdown>.dropdown-item:not(:first-child) {
-  border-top: solid #434141 1px;
+  border-top: solid var(--background) 1px;
 } .dropdown-item:hover {
-  background: #aaa;
+  background: var(--lightFeature);
 }
 
 /* Dialog */
@@ -39,12 +54,13 @@
   right: 30%;
   height: 30%;
   width: 30%;
-  background: #222;
+  background:var(--darkBackground);
   padding: 2%;
 }
 
 .identity {
   display: inline-flex;
+  cursor: pointer;
 }
 
 .whowhen>* {
@@ -58,17 +74,22 @@
 } .post>.identity>.avatar {
   height: 2em;
   width: 2em;
-} .comment>.identity>.avatar {
+} .reply>.identity>.avatar {
   height: 0.9em;
   width: 0.9em;
 }
 
 /* Core */
 body {
-  background: #434141;
-  color: #ccc;
+  background: var(--background);
+  color: var(--text);
   font-family: system-ui, sans-serif;
   font-size: 120%;
+  overflow-wrap: break-word;
+}
+
+.post {
+  contain: content;
 }
 
 /* Menu */
@@ -77,18 +98,26 @@ body {
   right: 0;
   top: 0;
   height: 98%;
-  width: 5%;
+  width: 5vw;
   margin: 1%;
 } #menu>* {
   width: 100%;
-  padding-bottom: 100%;
-  background: #383736;
-  border: black 1px solid;
+  /*padding-bottom: 100%; Allows for ratios but messes up height */
+  height: 5vw;
+  margin-bottom: 1vh;
+  cursor: pointer;
+} #menu>*.smaller {
+  background: var(--feature);
   border-radius: 100%;
 } #menu>*>* {
-  position: absolute;
-  width: 80%;
-  padding: 10%;
+  border-radius: 30%;
+} #menu>*:not(.smaller)>* {
+  height: 100%;
+  width: 100%;
+} #menu>*.smaller>* {
+  height: 70%;
+  width: 70%;
+  padding: 15%;
 }
 
 /* Feed */
@@ -121,92 +150,6 @@ body {
 }
 
 .new {
-  background: #383736;
+  background: var(--feature);
   width: 100%;
-}
-
-/* Posts */
-.post {
-  background: #383736;
-  padding: 2%;
-  margin-bottom: 2%;
-  width: 96%;
-  display: block;
-  font-size: 120%;
-  color: inherit;
-  border: none;
-} .post .content {
-  overflow: hidden;
-  display: block;
-} .post .content[contenteditable] + .interact {
-  display: none;
-}
-
-.post .poster {
-  font-weight: bold;
-} .post .posted {
-  font-size: 80%;
-  font-weight: lighter;
-}
-
-.posted .date {
-  display: none;
-}.posted:hover .relative {
-  display: none;
-} .posted:hover .date {
-  display: initial;
-}
-
-.post .interact, .post .buttons {
-  display: flex;
-} .post .interact button, .post .buttons button, .post .comments .new button { /* TODO: Text gets verically misaligned */
-  font-size: 70%;
-  padding: 1%;
-  margin: 1%;
-  background: #222;
-  border: none;
-  color: inherit;
-  border-radius: 10px;
-} .post .interact button[disabled], .post .buttons button[disabled], .post .comments .new button[disabled] {
-  background: #444;
-}
-
-.post .comments {
-  display: none;
-} .post.hasComments .comments {
-  display: initial;
-}
-.post .comments .new {
-  display: flex;
-} .post .comments .new .textarea {
-  flex: 1;
-} .post .comments .new .post {
-  flex: 0;
-}
-
-.post .comments .comment {
-  margin-bottom: 2%;
-}
-
-.post .comments .comment .name {
-  font-weight: bold;
-} .post .comments .comment .name::after {
-  content: ': ';
-}
-
-.post .content img {
-  height: auto;
-  width: 95%;
-  padding: 2%;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-}
-.alterPostButton {
-  float: right;
-  display: inline;
-  border: none;
-  background: none;
-  color: inherit;
-  font-size: 150%;
 }

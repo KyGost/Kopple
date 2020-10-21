@@ -1,0 +1,75 @@
+/* Posts */
+.post {
+  background: var(--feature);
+  padding: 2%;
+  margin-bottom: 2%;
+  width: 96%;
+  display: block;
+  font-size: 120%;
+  color: inherit;
+  border: none;
+} .post .content {
+  overflow: hidden;
+  display: block;
+} .post .content[contenteditable] + .interact {
+  display: none;
+}
+
+.post .poster {
+  font-weight: bold;
+} .post .posted {
+  font-size: 80%;
+  font-weight: lighter;
+}
+
+.posted .date {
+  display: none;
+}.posted:hover .relative {
+  display: none;
+} .posted:hover .date {
+  display: initial;
+}
+
+.post .interact, .post .buttons {
+  display: flex;
+}
+
+.post .replies {
+  display: none;
+} .post.hasReplies .content:not([contenteditable])~.replies {
+  display: initial;
+}
+.post .replies .new {
+  display: flex;
+} .post .replies .new .textarea {
+  flex: 1;
+} .post .replies .new .post {
+  flex: 0;
+}
+
+.post .replies .reply {
+  margin-top: 2%;
+}
+
+.post .replies .reply .name {
+  font-weight: bold;
+} .post .replies .reply .name::after {
+  content: ': ';
+}
+
+.post .content img {
+  height: auto;
+  width: 95%;
+  padding: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.alterPostButton {
+  float: right;
+  display: inline;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: 150%;
+}
