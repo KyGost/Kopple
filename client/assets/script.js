@@ -1,11 +1,15 @@
 import Post from './classes/post.js'
 import Reply from './classes/reply.js'
+
+import Dialog from './classes/dialog.js'
+
 import * as Utilities from './classes/utilities.js'
 
 import Constant from './classes/constant.js'
 import State from './classes/state.js'
 
-import Preference from './classes/preference.js'
+import Setting from './classes/setting.js'
+import Theme from './classes/theme.js'
 
 import Store from './classes/store.js'
 
@@ -99,89 +103,74 @@ const resetFiles
 const menuFollow
   = (
   ) => {
-    let found =  Utilities.newElement(
-      'newFollowFound',
+    let extraInfo = Utilities.newElement(
+      'found',
       'p'
     )
-    let title =  Utilities.newElement(
-      'dialogTitle',
-      'h2',
-      'Follow user'
-    );
-    let notes =  Utilities.newElement(
-      'dialogNotes',
-      'p',
-      'Enter an address below'
-    )
-    let input =  Utilities.newElement(
-      'dialogInput',
-      'input',
-      undefined,
-      {type: 'text', placeholder: '833d719039176d2803dcb76576684864953e2550760209b76183054841471fda'},
-      element => element.addEventListener('keyup', () => {
-        fetch('hyper://' + element.value + '/store/self.json')
-          .then(result => result.json()
-            .then(json => {
-              found.innerText = json[0].name;
-            })
-          ).catch(error => {
-            found.innerText = 'User not found';
-          })
+    new Dialog({
+        title: 'Follow User',
+        notes: 'Enter an address below',
+        doneText: 'Follow',
+        type: 'singleInput',
+        extraInfo: extraInfo,
+        singleInput: {
+          label: 'Address',
+          type: 'text',
+          placeholder: '833d719039176d2803dcb76576684864953e2550760209b76183054841471fda',
+          events: {
+            'keyup': (event) => {
+              fetch('hyper://' + event.srcElement.value + '/store/self.json')
+                .then(result => result.json()
+                  .then(json => {
+                    extraInfo.innerText = json[0].name;
+                  })
+                ).catch(error => {
+                  found.innerText = 'User not found';
+                })
+            }
+          }
+        }
       })
+  }
+const menuSettings
+  = (
+  ) => {
+    let extraInfo = Utilities.newElement(
+      'found',
+      'p'
     )
-    let buttons =  Utilities.newElement(
-      'dialogButtons',
-      'div',
-      [
-         Utilities.newElement(
-          'dialogDone',
-          'button',
-          'Follow',
-          undefined,
-          (element) => element.addEventListener('click', () => {
-            Store.files.follows.push({
-              address: input.value
-            })
-            Store.saveFiles();
-            document.body.removeChild(dialog);
-          })
-        ),
-         Utilities.newElement(
-          'dialogCancel',
-          'button',
-          'Cancel',
-          undefined,
-          element => element.addEventListener('click', () => document.body.removeChild(dialog))
-        )
-      ]
-    )
-    
-    let dialog =  Utilities.newElement(
-      'dialog',
-      'div',
-      [
-        title,
-        notes,
-        input,
-        found,
-        buttons
-      ]
-    )
-    document.body.appendChild(dialog);
+    new Dialog({
+        title: 'Settings',
+        notes: 'Set your settings',
+        doneText: 'Follow',
+        extraInfo: extraInfo,
+        multipleInput: [
+          {
+            label: 'Theme',
+            type: 'dropdown',
+            options: Object.keys(Theme)
+          }
+        ]
+      })
   }
 
 // Routine
 const onStart
   = (
   ) => {
+    var afterUpdate = () => feedLoad(); 
     if(window.location.hash === '#NEWINSTALL') {
       resetFiles();
       window.location.hash = '';
       alert('Welcome to Kopple!\nTell people your address is:\n' + location.hostname + '\n(You can copy it from the URL bar)\n\nYou should probably bookmark this page by the way!');
+    } else if (window.location.hash.startsWith('#PROFILE:')) {
+      let profile = window.location.hash.replace('#PROFILE:', '');
+      afterUpdate = () => {};
+      // TODO
     }
 
     if(!isDevelopmentDrive) update();
-    Store.update().then(() => feedLoad());
+    Store.update().then(afterUpdate);
     // If name is not currently set, prompt
     Store.loadFiles().then(() => {
       if(Store.files.self[0].name === undefined) {
@@ -198,7 +187,7 @@ const onStart
     window.setInterval(() => {
       if(State.doRefresh && State.refreshFeed) {
         State.doRefresh = false;
-        Store.update().then(() => feedLoad());
+        Store.update().then(() => feedLoad()); // TODO: Change for profiles
       }
     }, Constant.refreshInterval);
   }
@@ -328,7 +317,9 @@ const feedLoadReplies
 ///// Feed Load (Reposts and Reactions) TODO
 
 window.onStart = onStart
+//window.menuProfile = menuProfile
 window.menuFollow = menuFollow
+window.menuSettings = menuSettings
 window.feedNewPostPost = feedNewPostPost
 window.store = Store
 window.update = update

@@ -1,8 +1,8 @@
 import Theme from './theme.js'
-let Setting = {
+let Preference = {
   load: (
     ) => {
       
     }
 }
-export default Setting
+export default Preference

@@ -2,12 +2,9 @@ import Constant from './constant.js'
 
 // Constants
 /// Formatters/Converters
-//// Markdown // While true that commonmark is faster than showdown, the file size is more bloated, especially so since the minified file doesn't seem to load. The file also doesn't have HTML to Markdown functionality. Something that is useful.
-const markdownParser = new commonmark.Parser();
-const markdownRenderer = new commonmark.HtmlRenderer({safe: true});
 /// Intl
 const rtf = new Intl.RelativeTimeFormat();
-const dtf = new Intl.DateTimeFormat();
+const dtf = new Intl.DateTimeFormat('lt-LT');
 /// Other
 const dateUnits = {
   year: 24 * 60 * 60 * 1000 * 365,
@@ -65,7 +62,7 @@ const markdownToHTML
   = (
     markdown
   ) => {
-    return markdownRenderer.render(markdownParser.parse(markdown))
+    return beaker.markdown.toHTML(markdown)
   }
 
 const selfAsFollow // Just do inline?
@@ -100,7 +97,7 @@ const readFromFile
   = (
     file
   ) => {
-    return beaker.hyperdrive.readFile(locationFromFile(file), 'json');
+    return beaker.hyperdrive.readFile(locationFromFile(file), {encoding: 'json', timeout: 1000});
   }
 const writeToFile
   = (

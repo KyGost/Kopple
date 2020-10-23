@@ -1,5 +1,6 @@
 @import "./styles/scrollbar.css";
 @import "./styles/post.css";
+@import "./styles/dialog.css";
 @import "./styles/miscellaneous.css";
 
 /* Colors */
@@ -43,19 +44,6 @@
   border-top: solid var(--background) 1px;
 } .dropdown-item:hover {
   background: var(--lightFeature);
-}
-
-/* Dialog */
-.dialog {
-  position: fixed;
-  top: 30%;
-  bottom: 30%;
-  left: 30%;
-  right: 30%;
-  height: 30%;
-  width: 30%;
-  background:var(--darkBackground);
-  padding: 2%;
 }
 
 .identity {

@@ -1,12 +1,13 @@
 button { /* TODO: Text gets verically misaligned */
   font-size: 70%;
-  padding: 1%;
-  margin: 1%;
   background: var(--darkBackground);
   border: none;
   color: inherit;
   border-radius: 5px;
   line-height: 1.5em;
+} button:not(.alterPostButton) {
+  padding: 1%;
+  margin: 1%;
 } button[disabled] {
   background: var(--disabled);
 } button:not([disabled]) {
