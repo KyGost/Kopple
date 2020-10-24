@@ -20,23 +20,26 @@ const crawl
       // TODO: Return as recieved
       Constant.acceptedFiles.forEach(file => {
         waitFor.push(new Promise((resolveInner, reject) => {
-          try {beaker.hyperdrive.readFile('hyper://' + address + locationFromFile(file), 'json').then(result => {
-            //beaker.hyperdrive.writeFile('/cache/' + address + '/' + file + '.json', result, 'json');
-            Store.knowledgeBase[address][file] = result;
+          try {
+            beaker.hyperdrive.readFile('hyper://' + address + locationFromFile(file), {encoding: 'json', timeout: 1000})
+              .then(result => {
+                //beaker.hyperdrive.writeFile('/cache/' + address + '/' + file + '.json', result, 'json');
+                Store.knowledgeBase[address][file] = result;
 
-            if(file == 'follows' && distance > 0) {
-              var awaitCrawls = [];
-              result.forEach(follow => {
-                if(follow.address != undefined && !crawled.includes(follow.address)) awaitCrawls.push(crawl(distance - 1, follow.address, false));
+                if(file == 'follows' && distance > 0) {
+                  var awaitCrawls = [];
+                  result.forEach(follow => {
+                    if(follow.address != undefined && !crawled.includes(follow.address)) awaitCrawls.push(crawl(distance - 1, follow.address, false));
+                  });
+                  Promise.all(awaitCrawls).then(() => {resolveInner()});
+                } else resolveInner();
+              })
+              .catch(error => {
+                console.log('Bad crawl, address:', address, 'Error:', error);
+                resolveInner();
               });
-              Promise.all(awaitCrawls).then(() => {resolveInner()});
-            } else resolveInner();
-          }).catch(error => {
-            console.log('Bad crawl, address:', address, 'Error:', error);
-            resolveInner();
-          });
           } catch(error) {
-            console.error(error);
+            console.log(error);
           }
         }));
       });
@@ -81,25 +84,20 @@ let Store = {
               file
             ) => {
               loadingFiles.push(
-                readFromFile(file).then((
-                    result
-                  ) => {
-                    store.files[file] = result
-                  }
-                )
+                readFromFile(file)
+                  .then(result => {store.files[file] = result})
+                  .catch(console.error)
               )
             }
           )
-          Promise.all(loadingFiles).then((
-            ) => {
-              resolve()
-            }
-          )
+          Promise.all(loadingFiles)
+            .then(resolve)
+            .catch(resolve)
         }
       )
     },
   update
-    : async (
+    : (
       crawlDistance = 3
     ) => {
       return crawl(crawlDistance).then((

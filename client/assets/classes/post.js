@@ -70,6 +70,15 @@ class Post extends Element {
           this.element.parentElement.removeChild(this.element);
         })
       ));
+      options.push(newElement(
+        'dropdown-item',
+        'li',
+        'Permalink',
+        undefined,
+        (element) => element.addEventListener('click', () => {
+          location.hash = '#POST:' + [post.poster.address, post.identity].join('-')
+        })
+      ))
     this.element = newElement(
       'post',
       'div',

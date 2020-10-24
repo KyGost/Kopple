@@ -13,6 +13,8 @@ import Theme from './classes/theme.js'
 
 import Store from './classes/store.js'
 
+import PageType from './classes/pagetype.js'
+
 /// Update 'repository'
 const updateDrive = 'hyper://b71a2b60a0e08ce5c9766c99f3b0c4b6c1861499d14c723ff8be57f47479a900';
 
@@ -25,13 +27,7 @@ document.addEventListener('mousemove', (
     if(!State.doRefresh) State.doRefresh = true
   }
 )
-/* window.addEventListener('load', () => {
-  navigator.serviceWorker.register('assets/sw.js').then(register => {
-    console.log('SW Registered');
-	}).catch(error => {
-    console.log('SW Registration failed: ' + error);
-	});
-}); */ // TODO: Service workers. Dependancy: Service workers in Agregore/Beaker
+// TODO: Service workers. Dependancy: Service workers in Agregore/Beaker
 
 // Utilities
 /// Basic Utilities
@@ -158,19 +154,25 @@ const menuSettings
 const onStart
   = (
   ) => {
-    var afterUpdate = () => feedLoad(); 
-    if(window.location.hash === '#NEWINSTALL') {
-      resetFiles();
-      window.location.hash = '';
-      alert('Welcome to Kopple!\nTell people your address is:\n' + location.hostname + '\n(You can copy it from the URL bar)\n\nYou should probably bookmark this page by the way!');
-    } else if (window.location.hash.startsWith('#PROFILE:')) {
-      let profile = window.location.hash.replace('#PROFILE:', '');
-      afterUpdate = () => {};
-      // TODO
-    }
+    // Check if vistor owns drive
+    beaker.hyperdrive.writeFile('/.', '').catch(() => {
+      document.querySelector('#feedNewPost').innerHTML = Utilities.newElement(
+        'warning',
+        'div',
+        'THIS IS NOT YOUR DRIVE'
+      ).outerHTML
+    })
+
+    var afterUpdate
+    if(window.location.hash !== '') {
+      if(window.location.hash === '#NEWINSTALL') PageType.newInstall()
+      else if(window.location.hash.startsWith('#PROFILE:')) afterUpdate = PageType.profile
+      else if(window.location.hash.startsWith('#POST:')) afterUpdate = PageType.postLink
+    } else afterUpdate = feedLoad // TODO: move to PageType
+    
 
     if(!isDevelopmentDrive) update();
-    Store.update().then(afterUpdate);
+    Store.update().then(afterUpdate)
     // If name is not currently set, prompt
     Store.loadFiles().then(() => {
       if(Store.files.self[0].name === undefined) {
@@ -183,11 +185,10 @@ const onStart
 
       document.querySelector('#menuSelf img').src = Store.files.self[0].avatar || defaultAvatar;
     });
-
     window.setInterval(() => {
       if(State.doRefresh && State.refreshFeed) {
         State.doRefresh = false;
-        Store.update().then(() => feedLoad()); // TODO: Change for profiles
+        Store.update().then(afterUpdate); // TODO: Change for profiles
       }
     }, Constant.refreshInterval);
   }
@@ -316,6 +317,7 @@ const feedLoadReplies
   }
 ///// Feed Load (Reposts and Reactions) TODO
 
+window.onhashchange = onStart
 window.onStart = onStart
 //window.menuProfile = menuProfile
 window.menuFollow = menuFollow
@@ -323,3 +325,8 @@ window.menuSettings = menuSettings
 window.feedNewPostPost = feedNewPostPost
 window.store = Store
 window.update = update
+
+// Debug
+if(isDevelopmentDrive) {
+  window.feedLoad = feedLoad
+}
