@@ -4,6 +4,7 @@ import Reply from './classes/reply.js'
 import Dialog from './classes/dialog.js'
 
 import * as Utilities from './classes/utilities.js'
+import Sort from './classes/sort.js'
 
 import Constant from './classes/constant.js'
 import State from './classes/state.js'
@@ -22,28 +23,10 @@ const updateDrive = 'hyper://b71a2b60a0e08ce5c9766c99f3b0c4b6c1861499d14c723ff8b
 const isDevelopmentDrive = window.location.hostname === '833d719039176d2803dcb76576684864953e2550760209b76183054841471fda';
 
 // Document Manipulation
-document.addEventListener('mousemove', (
-  ) => {
-    if(!State.doRefresh) State.doRefresh = true
-  }
-)
+document.addEventListener('mousemove', () => {
+  if(!State.doRefresh) State.doRefresh = true
+})
 // TODO: Service workers. Dependancy: Service workers in Agregore/Beaker
-
-// Utilities
-/// Basic Utilities
-
-
-/// Functional Utilities
-
-
-/// Sorting
-const sortByDate
-  = (
-    a,
-    b
-  ) => {
-    return a.posted < b.posted ? 1 : -1;
-  }
 
 const update
   = async (
@@ -252,8 +235,8 @@ const feedLoad
         });
       }
     });
-    posts.sort(sortByDate);
-    interactions.sort(sortByDate);
+    posts.sort(Sort.PostByDate);
+    interactions.sort(Sort.PostByDate);
     feedLoadPosts(posts);
     feedLoadInteractions(interactions);
   }
@@ -267,10 +250,12 @@ const feedLoadPosts
     Array.from(feedElement.getElementsByClassName('post')).forEach(element => {
       feedElement.removeChild(element);
     });
-
+    
+    let loadStart = performance.now()
     posts.forEach(post => {
       feedElement.appendChild(new Post(post).asHTML())
     });
+    console.log('Post load took', performance.now() - loadStart, 'ms')
   }
 //// Feed Load Interactions
 const feedLoadInteractions

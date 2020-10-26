@@ -14,8 +14,7 @@ const PageType = {
     // TODO
   },
   postLink: () => {
-    let post = window.location.hash.replace('#POST:', '');
-    let [address, identity] = post.split('-')
+    let [address, identity] = window.location.hash.replace('#POST:', '').split('-')
     let feedElement = document.getElementById(Constant.id.feedID);
 
     Array.from(feedElement.getElementsByClassName('post')).forEach(element => {

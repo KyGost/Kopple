@@ -1,215 +1,138 @@
 import Element from './element.js'
-import {newElement, formatDateDifference, formatDateTime, markdownToHTML, preventHTMLInContentEditable} from './utilities.js'
+import {newElement, fromTemplate, formatDateDifference, formatDateTime, markdownToHTML, preventHTMLInContentEditable} from './utilities.js'
 
 import State from './state.js'
 
+let template
+/*fetch('../templates/post.html')*/beaker.hyperdrive.readFile('/client/assets/templates/post.html')
+  //.then(response => response.text())
+  .then(text => {
+    template = new DOMParser().parseFromString(text, 'text/html').querySelector('template')
+  })
 class Post extends Element {
   constructor(post) {
     super()
     this.post = post
-    let options = []
-      if(post.poster.address === location.hostname) options.push(newElement(
+    this.element = fromTemplate(
+      template,
+      {
+        post: {id: ['post', post.poster.address, post.identity].join('-')},
+        poster: {innerText: post.poster.name},
+        avatar: {src: post.poster.avatar},
+        relative: {innerText: formatDateDifference(post.posted)},
+        date: {innerText: formatDateTime(post.posted)},
+        content: {innerHTML: markdownToHTML(post.content)},
+        reply: {interactions: {click: () => {this.element.classList.add('hasReplies')}}},
+        postButton: {interactions: {click: this.postReplyClick}}
+      }
+    ).querySelector('.post')
+    // fromTemplate has most of the logic, some custom stuff is still needed though
+    this.decideOptions(post)
+    this.options.forEach(option => this.element.querySelector('.options').appendChild(option))
+  }
+  options = [
+    newElement(
+      'dropdown-item',
+      'li',
+      'Permalink',
+      undefined,
+      (element) => element.addEventListener('click', this.permalinkClick)
+    )
+  ]
+  decideOptions = (post) => {
+    if(post.poster.address === location.hostname) this.options = this.options.concat([
+      newElement(
         'dropdown-item',
         'li',
         'Edit',
         undefined,
         (element) => {
-          element.addEventListener('click', () => {
-            State.refreshFeed = false;
-
-            const restorePost = () => {
-              this.element.removeChild(buttons);
-              this.contentElement.removeAttribute('contentEditable');
-              State.refreshFeed = true;
-              this.contentElement.innerHTML = markdownToHTML(this.contentElement.innerText);
-            };
-            this.contentElement.contentEditable = true;
-            this.contentElement.addEventListener('keydown', preventHTMLInContentEditable);
-            let save = newElement(
-              'save',
-              'button',
-              'Save',
-              undefined,
-              (element) => {
-                element.addEventListener('click', () => {
-                  let changePost = store.files.feed.find(postCheck => postCheck.identity === post.identity)
-                  changePost.content = this.contentElement.innerText
-                  changePost.updated = new Date().getTime()
-                  store.saveFiles()
-                  post.content = changePost.content // Solution for double editing
-                  restorePost()
-                })
-              }
-            );
-            let cancel = newElement(
-              'cancel',
-              'button',
-              'Cancel',
-              undefined,
-              (element) => element.addEventListener('click', restorePost)
-            );
-            let buttons = newElement(
-              'buttons',
-              'div',
-              [save, cancel]
-            );
-            this.contentElement.innerText = post.content; // I was originally using showdown. It doesn't use commonmark unfrotunately. This means I cannot convert HTML back to markdown. This means double editing entails simply changing post variable content, this is a bit less nice but almost better in a weird way.
-            this.element.appendChild(buttons);
-          });
+          element.addEventListener('click', this.editClick);
         }
-      ));
-      if(post.poster.address === location.hostname) options.push(newElement(
+      ),
+      newElement(
         'dropdown-item',
         'li',
         'Delete',
         undefined,
-        (element) => element.addEventListener('click', () => {
-          let postIndex = store.files.feed.indexOf(store.files.feed.find(postCheck => postCheck.identity === post.identity));
-          store.files.feed.splice(postIndex, 1); // TODO: Should be improved
-          store.saveFiles();
-          this.element.parentElement.removeChild(this.element);
-        })
-      ));
-      options.push(newElement(
-        'dropdown-item',
-        'li',
-        'Permalink',
-        undefined,
-        (element) => element.addEventListener('click', () => {
-          location.hash = '#POST:' + [post.poster.address, post.identity].join('-')
-        })
-      ))
-    this.element = newElement(
-      'post',
-      'div',
-      [
-        newElement(
-          'identity',
-          'div',
-          [
-            newElement(
-              'avatar',
-              'img',
-              undefined,
-              {src: post.poster.avatar}
-            ),
-            newElement(
-              'whowhen',
-              'div',
-              [
-                newElement(
-                  'poster',
-                  'span',
-                  post.poster.name
-                ),
-                newElement(
-                  'posted',
-                  'span',
-                  [
-                    newElement(
-                      'relative',
-                      'span',
-                      formatDateDifference(post.posted)
-                    ),
-                    newElement(
-                      'date',
-                      'span',
-                      formatDateTime(post.posted)
-                    )
-                  ]
-                )
-              ]
-            )
-          ]
-        ),
-        newElement(
-          'alterPostButton',
-          'button',
-          '&#8285;'
-        ),
-        newElement(
-          'dropdown',
-          'ul',
-          options
-        ),
-        (this.contentElement = newElement(
-          'content',
-          'div',
-          markdownToHTML(post.content)
-        )),
-        newElement(
-          'interact',
-          'div',
-          [
-            newElement(
-              'repost',
-              'button',
-              '&#8617; Repost',
-              {disabled: true}
-            ),
-            newElement(
-              'reply',
-              'button',
-              '&#128488; Reply',
-              undefined,
-              (
-                element
-              ) => {
-                element.addEventListener('click', (
-                  ) => {
-                    this.element.classList.add('hasReplies')
-                  }
-                )
-              }
-            )
-          ]
-        ),
-        newElement(
-          'replies',
-          'div',
-          [
-            newElement(
-              'new',
-              'div',
-              [
-                (this.replyContentElement = newElement(
-                  'textarea',
-                  'span',
-                  undefined,
-                  {
-                    contentEditable: true,
-                    placeholder: 'New reply'
-                  }
-                )),
-                newElement(
-                  'postButton',
-                  'button',
-                  'Post',
-                  undefined,
-                  (element) => element.addEventListener('click', () => {
-                    let content = this.replyContentElement.innerText;
-                    let postElementID = this.element.id;
-                    let postElementIDParts = postElementID.split('-');
-                    let address = postElementIDParts[1];
-                    let postIdentity = postElementIDParts[2];
-                    store.files.interactions.push({
-                      address: address,
-                      postIdentity: postIdentity,
-                      type: 'reply',
-                      posted: new Date().getTime(),
-                      content: content
-                    })
-                    store.saveFiles();
-                    this.replyContentElement.innerText = '';
-                  })
-                )
-              ]
-            )
-          ]
-        )
-      ],
-      {id: ['post', post.poster.address, post.identity].join('-')}
-    )
+        (element) => element.addEventListener('click', this.deleteClick)
+      )
+    ])
   }
+  permalinkClick
+    = (
+    ) => {
+      location.hash = '#POST:' + [this.post.poster.address, this.post.identity].join('-')
+    }
+  editClick
+    = (
+    ) => {
+      State.refreshFeed = false;
+
+      const restorePost = () => {
+        this.element.removeChild(buttons);
+        this.element.querySelector('.content').removeAttribute('contentEditable');
+        State.refreshFeed = true;
+        this.element.querySelector('.content').innerHTML = markdownToHTML(this.element.querySelector('.content').innerText);
+      }
+      this.element.querySelector('.content').contentEditable = true;
+      this.element.querySelector('.content').addEventListener('keydown', preventHTMLInContentEditable);
+      let save = newElement(
+        'save',
+        'button',
+        'Save',
+        undefined,
+        (element) => {
+          element.addEventListener('click', () => {
+            let changePost = store.files.feed.find(postCheck => postCheck.identity === this.post.identity)
+            changePost.content = this.element.querySelector('.content').innerText
+            changePost.updated = new Date().getTime()
+            store.saveFiles()
+            this.post.content = changePost.content // Solution for double editing
+            restorePost()
+          })
+        }
+      );
+      let cancel = newElement(
+        'cancel',
+        'button',
+        'Cancel',
+        undefined,
+        (element) => element.addEventListener('click', restorePost)
+      );
+      let buttons = newElement(
+        'buttons',
+        'div',
+        [save, cancel]
+      );
+      this.element.querySelector('.content').innerText = this.post.content; // I was originally using showdown. It doesn't use commonmark unfrotunately. This means I cannot convert HTML back to markdown. This means double editing entails simply changing post variable content, this is a bit less nice but almost better in a weird way.
+      this.element.appendChild(buttons);
+    }
+  deleteClick
+    = (
+    ) => {
+      let postIndex = store.files.feed.indexOf(store.files.feed.find(postCheck => postCheck.identity === this.post.identity))
+      store.files.feed.splice(postIndex, 1) // TODO: Should be improved
+      store.saveFiles()
+      this.element.parentElement.removeChild(this.element)
+    }
+  postReplyClick
+    = (
+    ) => {
+      let content = this.element.querySelector('.replies>.new>.textarea').innerText
+      let postElementID = this.element.id
+      let postElementIDParts = postElementID.split('-')
+      let address = postElementIDParts[1]
+      let postIdentity = postElementIDParts[2]
+      store.files.interactions.push({
+        address: address,
+        postIdentity: postIdentity,
+        type: 'reply',
+        posted: new Date().getTime(),
+        content: content
+      })
+      store.saveFiles();
+      this.element.querySelector('.replies>.new>.textarea').innerText = ''
+    }
 }
 export default Post

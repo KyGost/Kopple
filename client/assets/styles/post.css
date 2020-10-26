@@ -13,6 +13,8 @@
   display: block;
 } .post .content[contenteditable] + .interact {
   display: none;
+} .post .content * {
+  white-space: normal;
 }
 
 .post .poster {

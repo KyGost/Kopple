@@ -37,6 +37,24 @@ const newElement
     return element;
   }
 
+const fromTemplate
+  = (
+    template,
+    templateValues
+  ) => {
+    const specialAttributes = ['innerHTML', 'innerText']
+    let element = template.content.cloneNode(true)
+    Object.keys(templateValues).forEach(item => {
+      let itemElement = element.querySelector('.' + item)
+      Object.keys(templateValues[item]).forEach(attribute => {
+        if (attribute === 'interactions') Object.keys(templateValues[item][attribute]).forEach(interaction => {itemElement.addEventListener(interaction, templateValues[item][attribute][interaction])})
+        else if(specialAttributes.includes(attribute)) itemElement[attribute] = templateValues[item][attribute]
+        else itemElement.setAttribute(attribute, templateValues[item][attribute])
+      })
+    })
+    return element
+  }
+
 const appropriateUnit
   = (
     difference
@@ -115,7 +133,8 @@ const locationFromFile
   }
 
 export {
-  newElement, formatDateDifference, formatDateTime, markdownToHTML, selfAsFollow, preventHTMLInContentEditable,
+  newElement, fromTemplate,
+  formatDateDifference, formatDateTime, markdownToHTML, selfAsFollow, preventHTMLInContentEditable,
   arrayFromCSV,
   readFromFile, writeToFile, locationFromFile
 }
