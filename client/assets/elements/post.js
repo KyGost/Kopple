@@ -1,18 +1,17 @@
 import Element from './element.js'
-import {newElement, fromTemplate, formatDateDifference, getTemplate, formatDateTime, markdownToHTML, preventHTMLInContentEditable} from './utilities.js'
+import PostTemplate from './postTemplate.js'
+import {newElement, fromTemplate, getTemplate, formatDateDifference, formatDateTime, markdownToHTML, preventHTMLInContentEditable} from '../classes/utilities.js'
 
-import State from './state.js'
-import Setting from './setting.js'
+import State from '../classes/state.js'
+import Setting from '../classes/setting.js'
 
-let template
-getTemplate('post').then(templateResult => template = templateResult)
-
+console.log(PostTemplate)
 class Post extends Element {
   constructor(post) {
     super()
     this.post = post
     this.element = fromTemplate(
-      template,
+      PostTemplate,
       {
         post: {id: ['post', post.poster.address, post.identity].join('-')},
         poster: {innerText: post.poster.name},
@@ -24,7 +23,6 @@ class Post extends Element {
         postButton: {interactions: {click: this.postReplyClick}}
       }
     ).querySelector('.post')
-    // fromTemplate has most of the logic, some custom stuff is still needed though
     this.decideOptions(post)
     this.options.forEach(option => this.element.querySelector('.options').appendChild(option))
   }

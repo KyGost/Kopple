@@ -1,3 +1,4 @@
+const templateString = `
 <template>
   <div class="reply">
     <span class="identity">
@@ -11,3 +12,6 @@
     </span>
   </div>
 </template>
+`
+const template = new DOMParser().parseFromString(templateString, 'text/html').querySelector('template')
+export default template

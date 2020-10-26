@@ -61,8 +61,8 @@ const getTemplate
   = (
     template
   ) => {
-    return /*fetch('../templates/post.html')*/beaker.hyperdrive.readFile(`/client/assets/templates/${template}.html`)
-      //.then(response => response.text())
+    return fetch(`/client/assets/elements/${template}.html`, {method: 'GET'})
+      .then(response => response.text())
       .then(text => {
         return new DOMParser().parseFromString(text, 'text/html').querySelector('template')
       })
@@ -80,7 +80,12 @@ const formatDateDifference
   ) => {
     let difference = date - new Date();
     let unit = appropriateUnit(difference);
-    return rtf.format(Math.round(difference / dateUnits[unit]), unit)
+    try {
+      return rtf.format(Math.round(difference / dateUnits[unit]), unit)
+    } catch(error) {
+      console.log('Format errored, date attempted:', date, '; Error: ', error)
+      return 0
+    }
   }
 const formatDateTime
   = (
@@ -93,7 +98,7 @@ const markdownToHTML
   = (
     markdown
   ) => {
-    return beaker.markdown.toHTML(markdown)
+    return markdownit().render(markdown)
   }
 
 const selfAsFollow // Just do inline?
@@ -124,11 +129,19 @@ const arrayFromCSV
 
 
 // File IO
+const timeoutSignal
+  = (
+  ) => {
+    let controller = new AbortController()
+    let signal = controller.signal
+    setTimeout(() => controller.abort(), Constant.IOTimeout)
+    return signal
+  }
 const readFromFile
   = (
     file
   ) => {
-    return beaker.hyperdrive.readFile(profileLocationFromFile(file), {encoding: 'json', timeout: 1000});
+    return fetch(profileLocationFromFile(file), {method: 'GET', signal: timeoutSignal()}).then(response => response.json()).then(json => json);
   }
 const writeToFile
   = (
@@ -156,5 +169,5 @@ export {
   newElement, fromTemplate, getTemplate,
   formatDateDifference, formatDateTime, markdownToHTML, selfAsFollow, preventHTMLInContentEditable,
   arrayFromCSV,
-  readFromFile, writeToFile, locationFromFile
+  readFromFile, writeToFile, locationFromFile, profileLocationFromFile
 }

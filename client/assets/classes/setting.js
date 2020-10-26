@@ -12,6 +12,12 @@ let Setting = {
   },
   set crawlDistance(value) {
     localStorage.setItem('crawlDistance', value)
+  },
+  get theme() {
+    return localStorage.getItem('theme') || 'DEFAULT'
+  },
+  set theme(value) {
+    localStorage.setItem('theme', value)
   }
   // TODO: Find a way to make this less gross
 }

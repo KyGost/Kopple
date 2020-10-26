@@ -1,11 +1,12 @@
 import {newElement} from './utilities.js'
-import Post from './post.js'
+import Actions from './actions.js'
+import Post from '../elements/post.js'
 import Constant from './constant.js'
 import Store from './store.js'
 
 const PageType = {
   newInstall: () => {
-    resetFiles()
+    Actions.resetFiles()
     window.location.hash = ''
     alert('Welcome to Kopple!\nTell people your address is:\n' + location.hostname + '\n(You can copy it from the URL bar)\n\nYou should probably bookmark this page by the way!')
   },

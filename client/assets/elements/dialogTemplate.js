@@ -1,3 +1,4 @@
+const templateString = `
 <template>
   <div class="dialog">
     <h2 class="dialogTitle"></h2>
@@ -11,3 +12,6 @@
     </div>
   </div>
 </template>
+`
+const template = new DOMParser().parseFromString(templateString, 'text/html').querySelector('template')
+export default template

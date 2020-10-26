@@ -1,8 +1,8 @@
-import Post from './classes/post.js'
-import Reply from './classes/reply.js'
+import Post from './elements/post.js'
+import Reply from './elements/reply.js'
+import Dialog from './elements/dialog.js'
 
-import Dialog from './classes/dialog.js'
-
+import Actions from './classes/actions.js'
 import * as Utilities from './classes/utilities.js'
 import Sort from './classes/sort.js'
 
@@ -24,29 +24,6 @@ document.addEventListener('mousemove', () => {
   if(!State.doRefresh) State.doRefresh = true
 })
 // TODO: Service workers. Dependancy: Service workers in Agregore/Beaker
-
-// Debug/Console
-const follow
-  = async (
-    address
-  ) => {
-    if(!Store.files.follows.some(follow => follow.address === address)) {
-      Store.files.follows.push({address: address});
-      Store.saveFiles();
-    }
-    else throw 'Already following address';
-  }
-const resetFiles
-  = async (
-  ) => {
-    for(var i = 0; i < Constant.acceptedFiles.length; i++) {
-      let file = Constant.acceptedFiles[i];
-      let content = file == 'self' ? [{}] : [];
-      await beaker.hyperdrive.writeFile(Utilities.locationFromFile(file), content, 'json');
-    }
-    location.reload();
-  }
-
 // Manual interaction
 const menuFollow
   = (
@@ -115,14 +92,17 @@ const menuSettings
           value: Setting.crawlDistance
         },
         {
-          label: 'Theme', // TODO
-          type: 'dropdown',
-          options: Object.keys(Theme)
+          id: 'theme',
+          label: 'Theme',
+          type: 'select',
+          options: Object.keys(Theme),
+          value: Setting.theme
         }
       ],
       doneClick: () => {
         Setting.profileDrive = document.querySelector('#profileDrive').value // Not sure I like this
         Setting.crawlDistance = document.querySelector('#crawlDistance').value // Not sure I like this
+        Setting.theme = document.querySelector('#theme').value // Not sure I like this
       }
     })
   }
@@ -184,6 +164,9 @@ const onStart
       })
       return
     }
+
+    Actions.loadTheme(Setting.theme)
+
     // Check if vistor owns drive
     beaker.hyperdrive.writeFile(`hyper://${Setting.profileDrive}/.writeCheck`, '').catch(() => {
       document.querySelector('#feedNewPost').innerHTML = Utilities.newElement(
@@ -268,22 +251,24 @@ const feedLoad
       if(knowledge.self) {
         knowledge.feed.forEach(post => {
           posts.push({
+            ...Constant.dataDefault.post,
             poster: poster,
             ...post
           });
         });
         knowledge.interactions.forEach(interaction => {
           interactions.push({
+            ...Constant.dataDefault.interaction,
             poster: poster,
             ...interaction
           });
         });
       }
     });
-    posts.sort(Sort.PostByDate);
-    interactions.sort(Sort.PostByDate);
-    feedLoadPosts(posts);
-    feedLoadInteractions(interactions);
+    posts.sort(Sort.PostByDate)
+    interactions.sort(Sort.PostByDate)
+    feedLoadPosts(posts)
+    feedLoadInteractions(interactions)
   }
 //// Feed Load Posts
 const feedLoadPosts
@@ -335,13 +320,12 @@ const feedLoadReplies
   ) => {
     replies.forEach(reply => {
       let postElementID = ['post', reply.address, reply.postIdentity].join('-');
-      try {
-        let postElement = document.getElementById(postElementID);
-        let repliesElement = postElement.querySelector('.replies');
-        postElement.classList.add('hasReplies'); // Good enough
-        repliesElement.appendChild(new Reply(reply).asHTML())
-      } catch(error) {
-        console.log('Post:',postElementID,'not found, interaction not loaded.');
+      let postElement = document.getElementById(postElementID);
+      if(!postElement) console.log('Post:',postElementID,'not found, interaction not loaded.')
+      else {
+        let repliesElement = postElement.querySelector('.replies')
+        postElement.classList.add('hasReplies') // Good enough
+        repliesElement.appendChild(new Reply(reply).asHTML()) 
       }
     });
   }

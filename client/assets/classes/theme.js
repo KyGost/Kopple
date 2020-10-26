@@ -8,8 +8,23 @@ const Theme = {
     '--darkBackground': '#222',
     '--lightFeature': '#aaa'
   },
-  WILLOW: {
-    
+  PURPLE: {
+    '--background': '#434161',
+    '--text': '#ccd',
+    '--feature': '#383756',
+    '--disabled': '#445',
+    '--buttonBackground': '#001',
+    '--darkBackground': '#223',
+    '--lightFeature': '#aab'
   }
+  /*WILLOW: {
+    '--background': 'red',
+    '--text': 'red',
+    '--feature': 'red',
+    '--disabled': 'red',
+    '--buttonBackground': 'blue',
+    '--darkBackground': 'blue',
+    '--lightFeature': 'blue'
+  }*/
 }
 export default Theme
