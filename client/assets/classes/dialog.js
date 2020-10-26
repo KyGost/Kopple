@@ -1,76 +1,52 @@
 import Element from './element.js'
-import {newElement} from './utilities.js'
+import {newElement, fromTemplate, getTemplate} from './utilities.js'
+
+let template
+getTemplate('dialog').then(templateResult => template = templateResult)
 
 class Dialog extends Element {
   constructor(dialog) {
     super()
-    let found = newElement(
-      'newFollowFound',
-      'p'
-    )
-    let title = newElement(
-      'dialogTitle',
-      'h2',
-      dialog.title
-    );
-    let notes = newElement(
-      'dialogNotes',
-      'p',
-      dialog.notes
-    )
-    let input = newElement(
-      'dialogInput',
-      'input',
-      undefined,
-      {type: 'text', placeholder: dialog.singleInput.placeholder},
-      element => element.addEventListener('keyup', dialog.singleInput.events.keyup)
-    )
-    let inputs;
-    if(dialog.singleInput) inputs = [input]
-    let inputsElement = newElement(
-      'dialogInputs',
-      'div',
-      inputs
-    )
-    let buttons = newElement(
-      'dialogButtons',
-      'div',
-      [
-         newElement(
-          'dialogDone',
-          'button',
-          dialog.doneText,
-          undefined,
-          (element) => element.addEventListener('click', () => {
-            Store.files.follows.push({
-              address: input.value
-            })
-            Store.saveFiles();
-            document.body.removeChild(dialog);
-          })
+    let inputs = []
+    dialog.inputs.forEach(input => {
+      inputs.push(newElement(
+        'dialogInputHolder',
+        'div',
+        [
+        newElement(
+          'dialogLabel',
+          'span',
+          input.label
         ),
-         newElement(
-          'dialogCancel',
-          'button',
-          'Cancel',
+        newElement(
+          'dialogInput',
+          'input',
           undefined,
-          element => element.addEventListener('click', () => document.body.removeChild(this.element))
+          input
         )
-      ]
-    )
-    
-    this.element = newElement(
-      'dialog',
-      'div',
-      [
-        title,
-        notes,
-        inputsElement,
-        dialog.extraInfo,
-        buttons
-      ]
-    )
-    document.body.appendChild(this.asHTML());
+      ]))
+    });
+    ((template) ? (async () => {})() : getTemplate('dialog').then(templateResult => template = templateResult)).then(() => { // Gross // TODO: Remove the grossness
+      this.element = fromTemplate(
+        template,
+        {
+          dialogTitle: {innerText: dialog.title},
+          dialogNotes: {innerText: dialog.notes},
+          dialogInputs: {
+            appendChildren: inputs
+          },
+          dialogDone: {
+            innerText: dialog.doneText || 'Done',
+            interactions: {click: (element) => {(dialog.doneClick || (() => {}))(element), this.remove()}}
+          },
+          dialogExtraInfo: {appendChildren: [dialog.extraInfo || document.createElement('div')]},
+          dialogCancel: {interactions: {click: this.remove}}
+        }
+      ).querySelector('.dialog')
+
+      document.body.appendChild(this.element)
+    })
   }
+  remove = () => document.body.removeChild(this.element)
 }
 export default Dialog

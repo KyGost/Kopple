@@ -1,4 +1,5 @@
 import Constant from './constant.js'
+import Setting from './setting.js'
 
 import {readFromFile, writeToFile, locationFromFile} from './utilities.js'
 
@@ -6,7 +7,7 @@ var crawled; // TODO: Perhaps this can be done better?
 const crawl
   = (
     distance,
-    address = location.host,
+    address = Setting.profileDrive,
     origin = true
   ) => {
     return new Promise((resolve, reject) => {
@@ -98,7 +99,7 @@ let Store = {
     },
   update
     : (
-      crawlDistance = 3
+      crawlDistance = Setting.crawlDistance
     ) => {
       return crawl(crawlDistance).then((
         ) => {

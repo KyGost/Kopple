@@ -13,3 +13,6 @@
 .dialog {
   text-align: center;
 }
+.dialogLabel::after {
+  content: ": ";
+}

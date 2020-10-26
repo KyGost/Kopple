@@ -16,45 +16,14 @@ import Store from './classes/store.js'
 
 import PageType from './classes/pagetype.js'
 
-/// Update 'repository'
-const updateDrive = 'hyper://b71a2b60a0e08ce5c9766c99f3b0c4b6c1861499d14c723ff8be57f47479a900';
-
 /// Debug/Other
-const isDevelopmentDrive = window.location.hostname === '833d719039176d2803dcb76576684864953e2550760209b76183054841471fda';
+const isDevelopmentDrive = window.location.hostname === 'bfa59937d1c74437f015096ab07ef04c30c051ad5a9d4bdf9d01abb19ca97f1c';
 
 // Document Manipulation
 document.addEventListener('mousemove', () => {
   if(!State.doRefresh) State.doRefresh = true
 })
 // TODO: Service workers. Dependancy: Service workers in Agregore/Beaker
-
-const update
-  = async (
-  ) => {
-    if((await beaker.hyperdrive.readFile('/client/manifest.json', 'json')).version != (await beaker.hyperdrive.readFile(updateDrive + '/client/manifest.json', 'json')).version) {
-      const find = async (
-          oldItems
-        ) => {
-          let items = await beaker.hyperdrive.query({
-              drive: updateDrive,
-              path: oldItems.map(item => item.path + (item.type == 'directory' ? '/*' : ''))
-            })
-          if(items.length > oldItems.length) find(items);
-          else items.forEach(async item => {
-            console.log('Updating ' + item.path);
-            try {
-              console.log('Downloading ' + item.path);
-              let read = await beaker.hyperdrive.readFile(updateDrive + item.path)
-              console.log('Installing ' + item.path);
-              beaker.hyperdrive.writeFile(item.path, read);
-            } catch (error) {
-              console.log('File update error, file: ' + item.path + ' error: ' + error);
-            }
-          });
-        }
-      find([{type: 'directory', path: '/client'}])
-    }
-  }
 
 // Debug/Console
 const follow
@@ -87,12 +56,14 @@ const menuFollow
       'p'
     )
     new Dialog({
-        title: 'Follow User',
-        notes: 'Enter an address below',
-        doneText: 'Follow',
-        type: 'singleInput',
-        extraInfo: extraInfo,
-        singleInput: {
+      title: 'Follow User',
+      notes: 'Enter an address below',
+      doneText: 'Follow',
+      type: 'singleInput',
+      extraInfo: extraInfo,
+      inputs: [
+        {
+          id: 'address',
           label: 'Address',
           type: 'text',
           placeholder: '833d719039176d2803dcb76576684864953e2550760209b76183054841471fda',
@@ -104,12 +75,19 @@ const menuFollow
                     extraInfo.innerText = json[0].name;
                   })
                 ).catch(error => {
-                  found.innerText = 'User not found';
+                  extraInfo.innerText = 'User not found';
                 })
             }
           }
         }
-      })
+      ],
+      doneClick: (element) => {
+        Store.files.follows.push({
+          address: document.querySelector('#address').value // Not sure I like this
+        })
+        Store.saveFiles()
+      }
+    })
   }
 const menuSettings
   = (
@@ -119,24 +97,93 @@ const menuSettings
       'p'
     )
     new Dialog({
-        title: 'Settings',
-        notes: 'Set your settings',
-        doneText: 'Follow',
-        extraInfo: extraInfo,
-        multipleInput: [
-          {
-            label: 'Theme',
-            type: 'dropdown',
-            options: Object.keys(Theme)
-          }
-        ]
-      })
+      title: 'Settings',
+      notes: 'Set your settings',
+      doneText: 'Save',
+      extraInfo: extraInfo,
+      inputs: [
+        {
+          id: 'profileDrive',
+          label: 'Profile',
+          type: 'text',
+          value: Setting.profileDrive
+        },
+        {
+          id: 'crawlDistance',
+          label: 'Crawl Distance',
+          type: 'number',
+          value: Setting.crawlDistance
+        },
+        {
+          label: 'Theme', // TODO
+          type: 'dropdown',
+          options: Object.keys(Theme)
+        }
+      ],
+      doneClick: () => {
+        Setting.profileDrive = document.querySelector('#profileDrive').value // Not sure I like this
+        Setting.crawlDistance = document.querySelector('#crawlDistance').value // Not sure I like this
+      }
+    })
   }
 
 // Routine
 const onStart
   = (
   ) => {
+    if(!Setting.profileDrive) {
+      new Dialog({
+        title: 'Welcome!',
+        notes: 'Do you already have a Kopple drive?',
+        inputs: [
+         {
+           type: 'button',
+           value: 'Yes',
+           events: {
+            click: () => {
+              let extraInfo = Utilities.newElement(
+                'found',
+                'p'
+              )
+              new Dialog({
+                title: 'What is your drive?',
+                notes: 'Enter it below',
+                extraInfo: extraInfo,
+                inputs: [
+                {
+                  id: 'address',
+                  label: 'Address',
+                  type: 'text',
+                  placeholder: '833d719039176d2803dcb76576684864953e2550760209b76183054841471fda',
+                  events: {
+                    'keyup': (event) => {
+                      fetch('hyper://' + event.srcElement.value + '/store/self.json')
+                        .then(result => result.json()
+                          .then(json => {
+                            extraInfo.innerText = json[0].name;
+                          })
+                        ).catch(error => {
+                          extraInfo.innerText = 'User not found';
+                        })
+                      }
+                    }
+                  }
+                ],
+                doneClick: (element) => {
+                  Setting.profileDrive = document.querySelector('#address').value // Not sure I like this
+                }
+              })
+            }
+           }
+         },
+         {
+           type: 'button',
+           value: 'No'
+         }
+        ]
+      })
+      return
+    }
     // Check if vistor owns drive
     beaker.hyperdrive.writeFile('/.', '').catch(() => {
       document.querySelector('#feedNewPost').innerHTML = Utilities.newElement(
@@ -153,8 +200,6 @@ const onStart
       else if(window.location.hash.startsWith('#POST:')) afterUpdate = PageType.postLink
     } else afterUpdate = feedLoad // TODO: move to PageType
     
-
-    if(!isDevelopmentDrive) update();
     Store.update().then(afterUpdate)
     // If name is not currently set, prompt
     Store.loadFiles().then(() => {
@@ -309,7 +354,6 @@ window.menuFollow = menuFollow
 window.menuSettings = menuSettings
 window.feedNewPostPost = feedNewPostPost
 window.store = Store
-window.update = update
 
 // Debug
 if(isDevelopmentDrive) {

@@ -1,14 +1,12 @@
 import Element from './element.js'
-import {newElement, fromTemplate, formatDateDifference, formatDateTime, markdownToHTML, preventHTMLInContentEditable} from './utilities.js'
+import {newElement, fromTemplate, formatDateDifference, getTemplate, formatDateTime, markdownToHTML, preventHTMLInContentEditable} from './utilities.js'
 
 import State from './state.js'
+import Setting from './setting.js'
 
 let template
-/*fetch('../templates/post.html')*/beaker.hyperdrive.readFile('/client/assets/templates/post.html')
-  //.then(response => response.text())
-  .then(text => {
-    template = new DOMParser().parseFromString(text, 'text/html').querySelector('template')
-  })
+getTemplate('post').then(templateResult => template = templateResult)
+
 class Post extends Element {
   constructor(post) {
     super()
@@ -40,7 +38,7 @@ class Post extends Element {
     )
   ]
   decideOptions = (post) => {
-    if(post.poster.address === location.hostname) this.options = this.options.concat([
+    if(post.poster.address === Setting.profileDrive) this.options = this.options.concat([
       newElement(
         'dropdown-item',
         'li',

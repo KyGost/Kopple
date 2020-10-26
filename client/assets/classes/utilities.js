@@ -1,4 +1,5 @@
 import Constant from './constant.js'
+import Setting from './setting.js'
 
 // Constants
 /// Formatters/Converters
@@ -31,8 +32,9 @@ const newElement
     });
     else element.innerHTML = contents;
     for(let attribute in attributes) {
-      element.setAttribute(attribute, attributes[attribute])
-    };
+      if(attribute === 'events') Object.keys(attributes[attribute]).forEach(interaction => element.addEventListener(interaction, attributes[attribute][interaction]))
+      else element.setAttribute(attribute, attributes[attribute])
+    }
     special(element);
     return element;
   }
@@ -42,17 +44,28 @@ const fromTemplate
     template,
     templateValues
   ) => {
-    const specialAttributes = ['innerHTML', 'innerText']
+    const specialAttributes = ['innerHTML', 'innerText', 'outerHTML']
     let element = template.content.cloneNode(true)
     Object.keys(templateValues).forEach(item => {
       let itemElement = element.querySelector('.' + item)
       Object.keys(templateValues[item]).forEach(attribute => {
         if (attribute === 'interactions') Object.keys(templateValues[item][attribute]).forEach(interaction => {itemElement.addEventListener(interaction, templateValues[item][attribute][interaction])})
+        if (attribute === 'appendChildren') templateValues[item][attribute].forEach((child) => {itemElement.appendChild(child)})
         else if(specialAttributes.includes(attribute)) itemElement[attribute] = templateValues[item][attribute]
         else itemElement.setAttribute(attribute, templateValues[item][attribute])
       })
     })
     return element
+  }
+const getTemplate
+  = (
+    template
+  ) => {
+    return /*fetch('../templates/post.html')*/beaker.hyperdrive.readFile(`/client/assets/templates/${template}.html`)
+      //.then(response => response.text())
+      .then(text => {
+        return new DOMParser().parseFromString(text, 'text/html').querySelector('template')
+      })
   }
 
 const appropriateUnit
@@ -115,25 +128,32 @@ const readFromFile
   = (
     file
   ) => {
-    return beaker.hyperdrive.readFile(locationFromFile(file), {encoding: 'json', timeout: 1000});
+    return beaker.hyperdrive.readFile(profileLocationFromFile(file), {encoding: 'json', timeout: 1000});
   }
 const writeToFile
   = (
     file,
     object
   ) => {
-    return beaker.hyperdrive.writeFile(locationFromFile(file), object, 'json');
+    return beaker.hyperdrive.writeFile(profileLocationFromFile(file), object, 'json');
   }
 const locationFromFile
   = (
     file
   ) => {
     if (!Constant.acceptedFiles.includes(file)) throw 'Not an accepted file!'
-    else return '/store/' + file + '.json'
+    else return `/store/${file}.json`
+  }
+const profileLocationFromFile
+  = (
+    file
+  ) => {
+    if (!Constant.acceptedFiles.includes(file)) throw 'Not an accepted file!'
+    else return `hyper://${Setting.profileDrive}${locationFromFile(file)}`
   }
 
 export {
-  newElement, fromTemplate,
+  newElement, fromTemplate, getTemplate,
   formatDateDifference, formatDateTime, markdownToHTML, selfAsFollow, preventHTMLInContentEditable,
   arrayFromCSV,
   readFromFile, writeToFile, locationFromFile
