@@ -185,7 +185,7 @@ const onStart
       return
     }
     // Check if vistor owns drive
-    beaker.hyperdrive.writeFile('/.', '').catch(() => {
+    beaker.hyperdrive.writeFile(`hyper://${Setting.profileDrive}/.writeCheck`, '').catch(() => {
       document.querySelector('#feedNewPost').innerHTML = Utilities.newElement(
         'warning',
         'div',
