@@ -5,7 +5,6 @@ import {newElement, fromTemplate, getTemplate, formatDateDifference, formatDateT
 import State from '../classes/state.js'
 import Setting from '../classes/setting.js'
 
-console.log(PostTemplate)
 class Post extends Element {
   constructor(post) {
     super()
@@ -13,7 +12,7 @@ class Post extends Element {
     this.element = fromTemplate(
       PostTemplate,
       {
-        post: {id: ['post', post.poster.address, post.identity].join('-')},
+        post: {id: ['post', post.poster.address, post.identity].join('-'), posted: post.posted},
         poster: {innerText: post.poster.name},
         avatar: {src: post.poster.avatar},
         relative: {innerText: formatDateDifference(post.posted)},

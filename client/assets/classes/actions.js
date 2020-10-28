@@ -1,6 +1,8 @@
 import Constant from './constant.js'
 import Theme from './theme.js'
 
+import fetch from '../bundles/api-beaker-polyfill-datfetch.js'
+
 import {profileLocationFromFile} from './utilities.js'
 
 const loadTheme
@@ -20,7 +22,7 @@ const resetFiles
     for(var i = 0; i < Constant.acceptedFiles.length; i++) {
       let file = Constant.acceptedFiles[i];
       let content = file == 'self' ? [{}] : [];
-      await beaker.hyperdrive.writeFile(profileLocationFromFile(file), content, 'json');
+      await fetch(profileLocationFromFile(file), {method: 'PUT', body: JSON.stringify(content)})
     }
     location.reload();
   }

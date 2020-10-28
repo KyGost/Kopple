@@ -1,6 +1,9 @@
 import Constant from './constant.js'
 import Setting from './setting.js'
 
+import fetch from '../bundles/api-beaker-polyfill-datfetch.js'
+import Markdown from '../bundles/markdown.js'
+
 // Constants
 /// Formatters/Converters
 /// Intl
@@ -98,7 +101,7 @@ const markdownToHTML
   = (
     markdown
   ) => {
-    return markdownit().render(markdown)
+    return Markdown.render(markdown)
   }
 
 const selfAsFollow // Just do inline?
@@ -131,24 +134,25 @@ const arrayFromCSV
 // File IO
 const timeoutSignal
   = (
+    time = Constant.IOTimeout
   ) => {
     let controller = new AbortController()
     let signal = controller.signal
-    setTimeout(() => controller.abort(), Constant.IOTimeout)
+    setTimeout(() => controller.abort(), time)
     return signal
   }
 const readFromFile
   = (
     file
   ) => {
-    return fetch(profileLocationFromFile(file), {method: 'GET', signal: timeoutSignal()}).then(response => response.json()).then(json => json);
+    return fetch(profileLocationFromFile(file), {method: 'GET'}).then(response => response.json()).then(json => json);
   }
 const writeToFile
   = (
     file,
     object
   ) => {
-    return beaker.hyperdrive.writeFile(profileLocationFromFile(file), object, 'json');
+    return fetch(profileLocationFromFile(file), {method: 'PUT', body: JSON.stringify(object)});
   }
 const locationFromFile
   = (
@@ -169,5 +173,5 @@ export {
   newElement, fromTemplate, getTemplate,
   formatDateDifference, formatDateTime, markdownToHTML, selfAsFollow, preventHTMLInContentEditable,
   arrayFromCSV,
-  readFromFile, writeToFile, locationFromFile, profileLocationFromFile
+  readFromFile, writeToFile, locationFromFile, profileLocationFromFile, timeoutSignal
 }

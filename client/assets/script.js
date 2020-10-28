@@ -187,14 +187,25 @@ const onStart
     // If name is not currently set, prompt
     Store.loadFiles().then(() => {
       if(Store.files.self[0].name === undefined) {
-        let newName = prompt('Welcome! Set your name:');
-        if(newName !== null && newName !== false) {
-          Store.files.self[0].name = newName;
-          Store.saveFiles();
-        }
+        new Dialog({
+          title: 'Welcome!',
+          notes: 'Set your name',
+          inputs: [
+            {
+              id: 'name',
+              label: 'Name',
+              type: 'text',
+              placeholder: 'John'
+            }
+          ],
+          doneClick: () => {
+            Store.files.self[0].name = document.querySelector('#name').value
+            Store.saveFiles()
+          }
+        })
       }
 
-      document.querySelector('#menuSelf img').src = Store.files.self[0].avatar || defaultAvatar;
+      document.querySelector('#menuSelf img').src = Store.files.self[0].avatar || Constant.userDefault.avatar;
     });
     window.setInterval(() => {
       if(State.doRefresh && State.refreshFeed) {
@@ -264,8 +275,10 @@ const feedLoad
           });
         });
       }
-    });
+    })
+    let preSort = performance.now()
     posts.sort(Sort.PostByDate)
+    console.log('Sort time:', performance.now() - preSort, 'ms')
     interactions.sort(Sort.PostByDate)
     feedLoadPosts(posts)
     feedLoadInteractions(interactions)
@@ -281,11 +294,7 @@ const feedLoadPosts
       feedElement.removeChild(element);
     });
     
-    let loadStart = performance.now()
-    posts.forEach(post => {
-      feedElement.appendChild(new Post(post).asHTML())
-    });
-    console.log('Post load took', performance.now() - loadStart, 'ms')
+    posts.forEach(post => feedElement.appendChild(new Post(post).asHTML()))
   }
 //// Feed Load Interactions
 const feedLoadInteractions
@@ -338,6 +347,7 @@ window.menuFollow = menuFollow
 window.menuSettings = menuSettings
 window.feedNewPostPost = feedNewPostPost
 window.store = Store
+window.resetFiles = Actions.resetFiles
 
 // Debug
 if(isDevelopmentDrive) {

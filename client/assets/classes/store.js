@@ -1,7 +1,9 @@
 import Constant from './constant.js'
 import Setting from './setting.js'
 
-import {readFromFile, writeToFile, locationFromFile} from './utilities.js'
+import fetch from '../bundles/api-beaker-polyfill-datfetch.js'
+
+import {readFromFile, writeToFile, locationFromFile, timeoutSignal} from './utilities.js'
 
 var crawled; // TODO: Perhaps this can be done better?
 const crawl
@@ -22,9 +24,10 @@ const crawl
       Constant.acceptedFiles.forEach(file => {
         waitFor.push(new Promise((resolveInner, reject) => {
           try {
-            beaker.hyperdrive.readFile('hyper://' + address + locationFromFile(file), {encoding: 'json', timeout: 1000})
+            let startTime = performance.now()
+            fetch('hyper://' + address + locationFromFile(file), {signal: timeoutSignal()})
+              .then(response => response.json())
               .then(result => {
-                //beaker.hyperdrive.writeFile('/cache/' + address + '/' + file + '.json', result, 'json');
                 Store.knowledgeBase[address][file] = result;
 
                 if(file == 'follows' && distance > 0) {
@@ -36,8 +39,8 @@ const crawl
                 } else resolveInner();
               })
               .catch(error => {
-                console.log('Bad crawl, address:', address, 'Error:', error);
-                resolveInner();
+                console.log('Bad crawl, address:', address, 'Error:', error, 'Attempted for:', performance.now() - startTime, 'ms')
+                resolveInner()
               });
           } catch(error) {
             console.log(error);
@@ -65,11 +68,7 @@ let Store = {
               awaitSave.push(writeToFile(file, store.files[file]));
             }
           );
-          Promise.all(awaitSave).then((
-            ) => {
-              resolve()
-            }
-          )
+          Promise.all(awaitSave).then(resolve)
         }
       );
     },

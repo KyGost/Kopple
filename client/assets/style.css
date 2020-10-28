@@ -3,6 +3,8 @@
 @import "./styles/dialog.css";
 @import "./styles/warning.css";
 @import "./styles/miscellaneous.css";
+@import "./styles/monokai-sublime.min.css";
+@import "./styles/task-list.css";
 
 /* Colors */
 :root {
