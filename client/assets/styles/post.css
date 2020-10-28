@@ -49,6 +49,17 @@
   flex: 0;
 }
 
+.showAllButton {
+  text-align: center;
+  display: none;
+} .post>.replies:not(.showAll)>.showAllButton:nth-last-child(n+5) {
+  display: block;
+}
+
+.post>.replies:not(.showAll)>.reply:not(:nth-of-type(-n+7)) {
+  display: none;
+}
+
 .post .replies .reply {
   margin-top: 2%;
 }

@@ -176,14 +176,7 @@ const onStart
       ).outerHTML
     })
 
-    var afterUpdate
-    if(window.location.hash !== '') {
-      if(window.location.hash === '#NEWINSTALL') PageType.newInstall()
-      else if(window.location.hash.startsWith('#PROFILE:')) afterUpdate = PageType.profile
-      else if(window.location.hash.startsWith('#POST:')) afterUpdate = PageType.postLink
-    } else afterUpdate = feedLoad // TODO: move to PageType
-    
-    Store.update().then(afterUpdate)
+    PageType[State.page]()
     // If name is not currently set, prompt
     Store.loadFiles().then(() => {
       if(Store.files.self[0].name === undefined) {
@@ -206,11 +199,11 @@ const onStart
       }
 
       document.querySelector('#menuSelf img').src = Store.files.self[0].avatar || Constant.userDefault.avatar;
-    });
+    })
     window.setInterval(() => {
       if(State.doRefresh && State.refreshFeed) {
         State.doRefresh = false;
-        Store.update().then(afterUpdate); // TODO: Change for profiles
+        PageType[State.page]()
       }
     }, Constant.refreshInterval);
   }
@@ -238,107 +231,9 @@ const feedNewPostPost
 
     Store.files.feed.push(post);
     Store.saveFiles().then(() => {
-      Store.update(1).then(() => feedLoad());
-    });
-  }
-
-/// Feed Load
-const feedLoad
-  = async (
-  ) => {
-    var posts = [];
-    var interactions = [];
-    Object.keys(Store.knowledgeBase).forEach((address) => {
-      let knowledge = Store.knowledgeBase[address];
-      let self = (knowledge.self || [])[0] || Constant.userDefault;
-      let name = self.name || Constant.userDefault.name,
-        avatar = self.avatar || Constant.userDefault.avatar
-      let poster = {
-        address: address,
-        name: name,
-        avatar: avatar
-      };
-      
-      if(knowledge.self) {
-        knowledge.feed.forEach(post => {
-          posts.push({
-            ...Constant.dataDefault.post,
-            poster: poster,
-            ...post
-          });
-        });
-        knowledge.interactions.forEach(interaction => {
-          interactions.push({
-            ...Constant.dataDefault.interaction,
-            poster: poster,
-            ...interaction
-          });
-        });
-      }
+      PageType[State.page]()
     })
-    let preSort = performance.now()
-    posts.sort(Sort.PostByDate)
-    console.log('Sort time:', performance.now() - preSort, 'ms')
-    interactions.sort(Sort.PostByDate)
-    feedLoadPosts(posts)
-    feedLoadInteractions(interactions)
   }
-//// Feed Load Posts
-const feedLoadPosts
-  = (
-    posts
-  ) => {
-    let feedElement = document.getElementById(Constant.id.feedID);
-
-    Array.from(feedElement.getElementsByClassName('post')).forEach(element => {
-      feedElement.removeChild(element);
-    });
-    
-    posts.forEach(post => feedElement.appendChild(new Post(post).asHTML()))
-  }
-//// Feed Load Interactions
-const feedLoadInteractions
-  = (
-    interactions
-  ) => {
-    var reposts = [];
-    var replies = [];
-    var reacts = [];
-    interactions.forEach((interaction) => {
-      switch(interaction.type) {
-        case 'repost':
-          reposts.push(interaction);
-          break;
-        case 'reply':
-        case 'comment': // AKA (historical) TODO: Phase out
-          replies.push(interaction);
-          break;
-        case 'react':
-          reacts.push(interaction);
-          break;
-        default:
-          break;
-      }
-    });
-    feedLoadReplies(replies);
-  }
-///// Feed Load replies
-const feedLoadReplies
-  = (
-    replies
-  ) => {
-    replies.forEach(reply => {
-      let postElementID = ['post', reply.address, reply.postIdentity].join('-');
-      let postElement = document.getElementById(postElementID);
-      if(!postElement) console.log('Post:',postElementID,'not found, interaction not loaded.')
-      else {
-        let repliesElement = postElement.querySelector('.replies')
-        postElement.classList.add('hasReplies') // Good enough
-        repliesElement.appendChild(new Reply(reply).asHTML()) 
-      }
-    });
-  }
-///// Feed Load (Reposts and Reactions) TODO
 
 window.onhashchange = onStart
 window.onStart = onStart
@@ -351,5 +246,5 @@ window.resetFiles = Actions.resetFiles
 
 // Debug
 if(isDevelopmentDrive) {
-  window.feedLoad = feedLoad
+  window.loadPage = PageType[State.page]
 }

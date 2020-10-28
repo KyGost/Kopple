@@ -1,6 +1,6 @@
 import Element from './element.js'
 import ReplyTemplate from './replyTemplate.js'
-import {newElement, fromTemplate, getTemplate, formatDateDifference, formatDateTime} from '../classes/utilities.js'
+import {fromTemplate, formatDateDifference, formatDateTime} from '../classes/utilities.js'
 
 class Reply extends Element {
   constructor(reply) {
@@ -8,6 +8,7 @@ class Reply extends Element {
     this.element = fromTemplate(
       ReplyTemplate,
       {
+        reply: {posted: reply.posted},
         avatar: {src: reply.poster.avatar},
         name: {innerText: reply.poster.name},
         content: {innerText: reply.content},

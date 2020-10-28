@@ -5,6 +5,10 @@ import Constant from './constant.js'
 import Store from './store.js'
 
 const PageType = {
+  feed: async () => {
+    await Store.update(Actions.loadFeed)
+    Actions.loadInteractions.load()
+  },
   newInstall: () => {
     Actions.resetFiles()
     window.location.hash = ''
@@ -14,46 +18,42 @@ const PageType = {
     let profile = window.location.hash.replace('#PROFILE:', '')
     // TODO
   },
-  postLink: () => {
+  postLink: async () => {
     let [address, identity] = window.location.hash.replace('#POST:', '').split('-')
-    let feedElement = document.getElementById(Constant.id.feedID);
+    let feedElement = document.getElementById(Constant.id.feedID)
+    
+    await Store.getSingle(address)
+    Actions.clearFeed()
 
-    Array.from(feedElement.getElementsByClassName('post')).forEach(element => {
-      feedElement.removeChild(element);
-    })
+    let {self, feed} = Store.knowledgeBase[address]
+    let post = feed.find(post => post.identity == identity)
+    if(post) {
+      let posterSelf = (self || [])[0] || Constant.userDefault;
+      let name = posterSelf.name || Constant.userDefault.name,
+        avatar = posterSelf.avatar || Constant.userDefault.avatar
+      let poster = {
+        address: address,
+        name: name,
+        avatar: avatar
+      }
+      post = {
+        identity: identity,
+        poster: poster,
+        ...post
+      }
 
-    beaker.hyperdrive.readFile('hyper://' + address + '/store/feed.json', 'json')
-      .then(feed => {
-        let posterSelf = (Store.knowledgeBase[address].self || [])[0] || Constant.userDefault;
-        let name = posterSelf.name || Constant.userDefault.name,
-          avatar = posterSelf.avatar || Constant.userDefault.avatar
-        let poster = {
-          address: address,
-          name: name,
-          avatar: avatar
-        }
-        let post = {
-          identity: identity,
-          poster: poster,
-          ...feed.find(post => post.identity == identity)
-        }
-
-        feedElement.appendChild(new Post(post).asHTML())
-      })
-      .catch((error) => {
-        console.error(error)
-        feedElement.appendChild(newElement(
-          'post', // not really but works with existing code this way
+      feedElement.appendChild(new Post(post).asHTML())
+    } else feedElement.appendChild(newElement(
+      'post', // not really but works with existing code this way
+      'div',
+      [
+        newElement(
+          'warning',
           'div',
-          [
-            newElement(
-              'warning',
-              'div',
-              'POST NOT FOUND'
-            )
-          ]
-        ))
-      })
+          'POST NOT FOUND'
+        )
+      ]
+    ))
   }
 }
 

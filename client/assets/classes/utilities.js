@@ -130,6 +130,14 @@ const arrayFromCSV
     return CSV.split(',').filter(element => element !== '')
   }
 
+const sortElementsByPosted
+  = (
+    className
+  ) => {
+    Array.from(document.querySelectorAll(`.${className}`))
+      .sort((a, b) => (a.getAttribute('posted') < b.getAttribute('posted')) ? 1 : -1)
+      .forEach(element => element.parentElement.appendChild(element))
+  }
 
 // File IO
 const timeoutSignal
@@ -172,6 +180,6 @@ const profileLocationFromFile
 export {
   newElement, fromTemplate, getTemplate,
   formatDateDifference, formatDateTime, markdownToHTML, selfAsFollow, preventHTMLInContentEditable,
-  arrayFromCSV,
+  arrayFromCSV, sortElementsByPosted,
   readFromFile, writeToFile, locationFromFile, profileLocationFromFile, timeoutSignal
 }

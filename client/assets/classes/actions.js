@@ -1,19 +1,92 @@
-import Constant from './constant.js'
 import Theme from './theme.js'
+
+import Constant from './constant.js'
+import Store from './store.js'
 
 import fetch from '../bundles/api-beaker-polyfill-datfetch.js'
 
-import {profileLocationFromFile} from './utilities.js'
+import {profileLocationFromFile, sortElementsByPosted} from './utilities.js'
+
+import Post from '../elements/post.js'
+import Reply from '../elements/reply.js'
 
 const loadTheme
   = (
     theme
   ) => {
     let themeObject = Theme[theme]
-    console.log(theme, Theme, Theme[theme])
     Object.keys(themeObject).forEach(variable => {
       document.documentElement.style.setProperty(variable, themeObject[variable])
     })
+  }
+
+const loadFeed
+  = (
+    address
+  ) => {
+    let feedElement = document.getElementById(Constant.id.feedID)
+    clearFeed(address)
+    let knowledge = Store.knowledgeBase[address]
+    let {self, feed, interactions} = knowledge
+    self = (knowledge.self || [])[0] || Constant.userDefault
+    let name = self.name || Constant.userDefault.name,
+      avatar = self.avatar || Constant.userDefault.avatar
+    let poster = {
+      address: address,
+      name: name,
+      avatar: avatar
+    }
+    if(feed !== undefined) feed.forEach(post => {
+      feedElement.appendChild(new Post({
+        ...Constant.dataDefault.post,
+        poster: poster,
+        ...post
+      }).asHTML())
+    })
+    
+    if(interactions !== undefined) interactions.forEach(interaction => {
+      interaction = {
+        ...Constant.dataDefault.interaction,
+        poster: poster,
+        ...interaction
+      }
+      if(!loadInteractions.interactionGroups[interaction.type]) loadInteractions.interactionGroups[interaction.type] = [] // TODO: Maybe there's a better way to assign this?
+      loadInteractions.interactionGroups[interaction.type].push(interaction)
+    })
+
+    
+    sortElementsByPosted('post')
+  }
+
+const loadInteractions = {
+  interactionGroups: {},
+  load: function() {
+    clearFeed(undefined, true)
+    this.interactionGroups.reply = this.interactionGroups.reply.concat(this.interactionGroups.comment) // Legacy
+    this.interactionGroups.reply.forEach(reply => {
+      let postElementID = ['post', reply.address, reply.postIdentity].join('-');
+      let postElement = document.getElementById(postElementID);
+      if(!postElement) console.log('Post:', postElementID, 'not found, interaction not loaded.')
+      else {
+        let repliesElement = postElement.querySelector('.replies')
+        postElement.classList.add('hasReplies')
+        repliesElement.appendChild(new Reply(reply).asHTML()) 
+      }
+    })
+    sortElementsByPosted('reply')
+    this.interactionGroups = {}
+  }
+}
+
+const clearFeed
+  = (
+    address,
+    replies = false
+  ) => {
+    let query = `#${Constant.id.feedID}>${replies ? ' .reply' : !address ? '.post' : '*[id^=post-' + address + ']'}`
+    Array.from(document.querySelectorAll(query)).forEach(postElement => {
+      postElement.parentElement.removeChild(postElement)
+    }) 
   }
 
 const resetFiles
@@ -27,4 +100,4 @@ const resetFiles
     location.reload();
   }
 
-export default {loadTheme, resetFiles}
+export default {loadTheme, loadFeed, loadInteractions, clearFeed, resetFiles}

@@ -1,6 +1,8 @@
 import Constant from './constant.js'
 import Setting from './setting.js'
 
+import Actions from './actions.js'
+
 import fetch from '../bundles/api-beaker-polyfill-datfetch.js'
 
 import {readFromFile, writeToFile, locationFromFile, timeoutSignal} from './utilities.js'
@@ -8,19 +10,19 @@ import {readFromFile, writeToFile, locationFromFile, timeoutSignal} from './util
 var crawled; // TODO: Perhaps this can be done better?
 const crawl
   = (
+    onComplete,
     distance,
     address = Setting.profileDrive,
-    origin = true
+    origin = true,
   ) => {
     return new Promise((resolve, reject) => {
-      if(origin) crawled = [];
+      if(origin) crawled = []
       crawled.push(address);
 
       console.log('Crawling ' + address + ' ' + distance + ' steps to go.');
 
       var waitFor = [];
-      Store.knowledgeBase[address] = [];
-      // TODO: Return as recieved
+      Store.knowledgeBase[address] = []
       Constant.acceptedFiles.forEach(file => {
         waitFor.push(new Promise((resolveInner, reject) => {
           try {
@@ -33,7 +35,7 @@ const crawl
                 if(file == 'follows' && distance > 0) {
                   var awaitCrawls = [];
                   result.forEach(follow => {
-                    if(follow.address != undefined && !crawled.includes(follow.address)) awaitCrawls.push(crawl(distance - 1, follow.address, false));
+                    if(follow.address != undefined && !crawled.includes(follow.address)) awaitCrawls.push(crawl(onComplete, distance - 1, follow.address, false));
                   });
                   Promise.all(awaitCrawls).then(() => {resolveInner()});
                 } else resolveInner();
@@ -47,7 +49,10 @@ const crawl
           }
         }));
       });
-      Promise.all(waitFor).then(()=>{resolve()});
+      Promise.all(waitFor).then(() => {
+        onComplete(address)
+        resolve()
+      })
     });
   }
 
@@ -98,13 +103,17 @@ let Store = {
     },
   update
     : (
+      onComplete = () => {},
       crawlDistance = Setting.crawlDistance
     ) => {
-      return crawl(crawlDistance).then((
-        ) => {
-          console.log('Knowledge Base Filled');
-        }
-      );
+      return crawl(onComplete, crawlDistance).then(() => {console.log('Knowledge Base Filled')})
+    },
+  getSingle
+    : (
+      address,
+      onComplete = () => {}
+    ) => {
+      return crawl(onComplete, 0, address).then(() => {console.log('Knowledge Base Filled')})
     }
 }
 export default Store

@@ -1,6 +1,6 @@
 import Element from './element.js'
 import PostTemplate from './postTemplate.js'
-import {newElement, fromTemplate, getTemplate, formatDateDifference, formatDateTime, markdownToHTML, preventHTMLInContentEditable} from '../classes/utilities.js'
+import {newElement, fromTemplate, formatDateDifference, formatDateTime, markdownToHTML, preventHTMLInContentEditable} from '../classes/utilities.js'
 
 import State from '../classes/state.js'
 import Setting from '../classes/setting.js'

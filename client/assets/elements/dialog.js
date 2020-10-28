@@ -1,6 +1,6 @@
 import Element from './element.js'
 import DialogTemplate from './dialogTemplate.js'
-import {newElement, fromTemplate, getTemplate} from '../classes/utilities.js'
+import {newElement, fromTemplate} from '../classes/utilities.js'
 
 class Dialog extends Element {
   constructor(dialog) {

@@ -23,6 +23,9 @@ const templateString = `
           <span class="textarea" contenteditable="true" placeholder="New reply"></span>
           <button class="postButton">Post</button>
         </div>
+        <div class="showAllButton" onclick="this.parentElement.classList.add('showAll')">
+          <span>Show all</span>
+        </div>
       </div>
   </div>
 </template>
