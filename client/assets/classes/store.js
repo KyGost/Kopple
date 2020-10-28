@@ -104,9 +104,10 @@ let Store = {
   update
     : (
       onComplete = () => {},
-      crawlDistance = Setting.crawlDistance
+      crawlDistance = Setting.crawlDistance,
+      address
     ) => {
-      return crawl(onComplete, crawlDistance).then(() => {console.log('Knowledge Base Filled')})
+      return crawl(onComplete, crawlDistance, address).then(() => {console.log('Knowledge Base Filled')})
     },
   getSingle
     : (

@@ -198,6 +198,7 @@ const onStart
         })
       }
 
+      document.querySelector('#menuSelf').addEventListener('click', () => {location.hash = '#PROFILE:' + Setting.profileDrive})
       document.querySelector('#menuSelf img').src = Store.files.self[0].avatar || Constant.userDefault.avatar;
     })
     window.setInterval(() => {
@@ -235,7 +236,6 @@ const feedNewPostPost
     })
   }
 
-window.onhashchange = onStart
 window.onStart = onStart
 //window.menuProfile = menuProfile
 window.menuFollow = menuFollow

@@ -13,6 +13,7 @@ class Post extends Element {
       PostTemplate,
       {
         post: {id: ['post', post.poster.address, post.identity].join('-'), posted: post.posted},
+        identity: {interactions: {click: () => {location.hash = `#PROFILE:${post.poster.address}`}}},
         poster: {innerText: post.poster.name},
         avatar: {src: post.poster.avatar},
         relative: {innerText: formatDateDifference(post.posted)},
@@ -31,7 +32,7 @@ class Post extends Element {
       'li',
       'Permalink',
       undefined,
-      (element) => element.addEventListener('click', this.permalinkClick)
+      (element) => {element.addEventListener('click', () => {this.permalinkClick()})}
     )
   ]
   decideOptions = (post) => {
