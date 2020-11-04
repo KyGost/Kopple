@@ -2,7 +2,10 @@ import Constant from './constant.js'
 import Setting from './setting.js'
 
 import fetch from '../bundles/api-beaker-polyfill-datfetch.js'
-import Markdown from '../bundles/markdown.js'
+
+import Markdown from 'hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+611/index.js'
+import hider from 'hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+611/plugins/hider.js'
+Markdown.use(...hider)
 
 // Constants
 /// Formatters/Converters
@@ -28,18 +31,18 @@ const newElement
     attributes = {},
     special = () => {}
   ) => {
-    let element = document.createElement(tag);
-    element.classList.add(elementClass);
-    if(Array.isArray(contents)) contents.forEach(content => {
-      element.appendChild(content);
-    });
-    else element.innerHTML = contents;
-    for(let attribute in attributes) {
+    let element = document.createElement(tag)
+    element.classList.add(elementClass)
+    if(Array.isArray(contents)) contents.forEach(async content => {
+      element.appendChild(content)
+    })
+    else element.innerHTML = contents
+    Object.keys(attributes).forEach(async attribute => {
       if(attribute === 'events') Object.keys(attributes[attribute]).forEach(interaction => element.addEventListener(interaction, attributes[attribute][interaction]))
       else element.setAttribute(attribute, attributes[attribute])
-    }
-    special(element);
-    return element;
+    })
+    special(element)
+    return element
   }
 
 const fromTemplate

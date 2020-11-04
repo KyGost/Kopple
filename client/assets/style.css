@@ -1,10 +1,12 @@
+@import "./styles/headElement.css";
+@import "./styles/newPost.css";
 @import "./styles/scrollbar.css";
+@import "./styles/identity.css";
 @import "./styles/post.css";
 @import "./styles/dialog.css";
 @import "./styles/warning.css";
 @import "./styles/miscellaneous.css";
-@import "./styles/monokai-sublime.min.css";
-@import "./styles/task-list.css";
+@import "./styles/taskList.css";
 
 /* Colors */
 :root {
@@ -49,25 +51,9 @@
   background: var(--lightFeature);
 }
 
-.identity {
-  display: inline-flex;
-  cursor: pointer;
-}
-
 .whowhen>* {
   display: block;
   white-space: nowrap;
-}
-
-.avatar {
-  border-radius: 30%;
-  margin: 0.2em;
-} .post>.identity>.avatar {
-  height: 2em;
-  width: 2em;
-} .reply>.identity>.avatar {
-  height: 0.9em;
-  width: 0.9em;
 }
 
 /* Core */
@@ -120,27 +106,4 @@ body {
 }
 #feedNewPostText {
   height: 15%;
-}
-
-.new #feedNewPostContent {
-  width: 100%;
-  margin-top: 4%;
-  background: inherit;
-  color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  padding: 1%;
-  margin: 0;
-  border: none;
-  resize: vertical;
-  height: 50px;
-  transition: height .15s ease-in;
-} .new:focus-within #feedNewPostContent {
-  height: 300px;
-  transition: height .25s ease-out;
-}
-
-.new {
-  background: var(--feature);
-  width: 100%;
 }

@@ -9,51 +9,32 @@ class Post extends Element {
   constructor(post) {
     super()
     this.post = post
+    var templateOptions = {
+      post: {id: ['post', post.poster.address, post.identity].join('-'), posted: post.posted},
+      identity: {interactions: {click: () => {location.hash = `#PROFILE:${post.poster.address}`}}},
+      poster: {innerText: post.poster.name},
+      avatar: {src: post.poster.avatar},
+      relative: {innerText: formatDateDifference(post.posted)},
+      date: {innerText: formatDateTime(post.posted)},
+      content: {innerHTML: markdownToHTML(post.content)},
+      reply: {interactions: {click: () => {this.element.classList.add('hasReplies')}}},
+      postButton: {interactions: {click: this.postReplyClick}}
+    }
+    templateOptions = {...templateOptions, ...this.decideOptions(post)}
     this.element = fromTemplate(
       PostTemplate,
-      {
-        post: {id: ['post', post.poster.address, post.identity].join('-'), posted: post.posted},
-        identity: {interactions: {click: () => {location.hash = `#PROFILE:${post.poster.address}`}}},
-        poster: {innerText: post.poster.name},
-        avatar: {src: post.poster.avatar},
-        relative: {innerText: formatDateDifference(post.posted)},
-        date: {innerText: formatDateTime(post.posted)},
-        content: {innerHTML: markdownToHTML(post.content)},
-        reply: {interactions: {click: () => {this.element.classList.add('hasReplies')}}},
-        postButton: {interactions: {click: this.postReplyClick}}
-      }
+      templateOptions
     ).querySelector('.post')
-    this.decideOptions(post)
-    this.options.forEach(option => this.element.querySelector('.options').appendChild(option))
   }
-  options = [
-    newElement(
-      'dropdown-item',
-      'li',
-      'Permalink',
-      undefined,
-      (element) => {element.addEventListener('click', () => {this.permalinkClick()})}
-    )
-  ]
   decideOptions = (post) => {
-    if(post.poster.address === Setting.profileDrive) this.options = this.options.concat([
-      newElement(
-        'dropdown-item',
-        'li',
-        'Edit',
-        undefined,
-        (element) => {
-          element.addEventListener('click', this.editClick);
-        }
-      ),
-      newElement(
-        'dropdown-item',
-        'li',
-        'Delete',
-        undefined,
-        (element) => element.addEventListener('click', this.deleteClick)
-      )
-    ])
+    let options = {
+      optionPermalink: {possible: true, interactions: {click: this.permalinkClick}}
+    }
+    if(post.poster.address === Setting.profileDrive) {
+      options.optionEdit = {possible: true, interactions: {click: this.editClick}}
+      options.optionDelete = {possible: true, interactions: {click: this.editClick}}
+    }
+    return options
   }
   permalinkClick
     = (

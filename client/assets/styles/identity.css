@@ -1,0 +1,42 @@
+.identity:not(#profileInformationIdentity) {
+  display: inline-flex;
+  cursor: pointer;
+} .identity .name {
+  font-weight: bold;
+} #profileInformationIdentity {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+#profileInformationEdit {
+  float: right;
+  display: inline;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: 250%;
+  margin: 0;
+}
+#profileInformationEditOptions>.dropdown-item {
+  font-size: 150%;
+}
+
+#profileInformationName {
+  position: relative;
+  bottom: 0.4em;
+  font-size: 3em;
+}
+
+.avatar {
+  border-radius: 30%;
+  margin: 0.2em;
+} #profileInformationAvatar {
+  height: 4em;
+  width: 4em;
+} .post>.identity>.avatar {
+  height: 2em;
+  width: 2em;
+} .reply>.identity>.avatar {
+  height: 0.9em;
+  width: 0.9em;
+}

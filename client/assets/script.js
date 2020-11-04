@@ -1,10 +1,7 @@
-import Post from './elements/post.js'
-import Reply from './elements/reply.js'
 import Dialog from './elements/dialog.js'
 
 import Actions from './classes/actions.js'
 import * as Utilities from './classes/utilities.js'
-import Sort from './classes/sort.js'
 
 import Constant from './classes/constant.js'
 import State from './classes/state.js'
@@ -16,13 +13,6 @@ import Store from './classes/store.js'
 
 import PageType from './classes/pagetype.js'
 
-/// Debug/Other
-const isDevelopmentDrive = window.location.hostname === 'bfa59937d1c74437f015096ab07ef04c30c051ad5a9d4bdf9d01abb19ca97f1c';
-
-// Document Manipulation
-document.addEventListener('mousemove', () => {
-  if(!State.doRefresh) State.doRefresh = true
-})
 // TODO: Service workers. Dependancy: Service workers in Agregore/Beaker
 // Manual interaction
 const menuFollow
@@ -59,7 +49,7 @@ const menuFollow
         }
       ],
       doneClick: (element) => {
-        Store.files.follows.push({
+        Store.files.follows.push({ // TODO: Unfollow
           address: document.querySelector('#address').value // Not sure I like this
         })
         Store.saveFiles()
@@ -111,8 +101,51 @@ const menuSettings
 const onStart
   = (
   ) => {
-    if(!Setting.profileDrive) {
-      new Dialog({
+    document.body.setAttribute('page', location.hash.replace(/#(.*):.*/g, '$1') || 'FEED')
+
+    if(!Setting.profileDrive) return welcomeDialog()
+
+    Actions.loadTheme(Setting.theme)
+
+    // Check if vistor owns drive
+    beaker.hyperdrive.writeFile(`hyper://${Setting.profileDrive}/.writeCheck`, '').catch(() => {
+      document.querySelector('#feedNewPost').innerHTML = Utilities.newElement(
+        'warning',
+        'div',
+        'THIS IS NOT YOUR DRIVE'
+      ).outerHTML
+    })
+
+    Store.loadFiles().then(() => {
+      PageType[State.page](true)
+      // If name is not currently set, prompt
+      if(Store.files.self[0].name === undefined) {
+        new Dialog({
+          title: 'Welcome!',
+          notes: 'Set your name',
+          inputs: [
+            {
+              id: 'name',
+              label: 'Name',
+              type: 'text',
+              placeholder: 'John'
+            }
+          ],
+          doneClick: () => {
+            Store.files.self[0].name = document.querySelector('#name').value
+            Store.saveFiles()
+          }
+        })
+      }
+
+      document.querySelector('#menuSelf').addEventListener('click', () => {location.hash = '#PROFILE:' + Setting.profileDrive})
+      document.querySelector('#menuSelf img').src = Store.files.self[0].avatar
+    })
+  }
+
+const welcomeDialog
+  = (
+  ) => new Dialog({
         title: 'Welcome!',
         notes: 'Do you already have a Kopple drive?',
         inputs: [
@@ -149,7 +182,7 @@ const onStart
                     }
                   }
                 ],
-                doneClick: (element) => {
+                doneClick: () => {
                   Setting.profileDrive = document.querySelector('#address').value // Not sure I like this
                 }
               })
@@ -158,56 +191,19 @@ const onStart
          },
          {
            type: 'button',
-           value: 'No'
+           value: 'No',
+           events: {
+            click: async () => {
+              // Not possible to in Agregore atm (CORS: Link)
+              const newDrive = await beaker.hyperdrive.createDrive({title: 'Kopple'})
+              window.onhashchange = () => {}
+              location.hash = '#NEWINSTALL'
+              Setting.profileDrive = newDrive.url.replace(/.*\/\/(.*)\/.*/g, '$1')
+            }
+           }
          }
         ]
       })
-      return
-    }
-
-    Actions.loadTheme(Setting.theme)
-
-    // Check if vistor owns drive
-    beaker.hyperdrive.writeFile(`hyper://${Setting.profileDrive}/.writeCheck`, '').catch(() => {
-      document.querySelector('#feedNewPost').innerHTML = Utilities.newElement(
-        'warning',
-        'div',
-        'THIS IS NOT YOUR DRIVE'
-      ).outerHTML
-    })
-
-    PageType[State.page]()
-    // If name is not currently set, prompt
-    Store.loadFiles().then(() => {
-      if(Store.files.self[0].name === undefined) {
-        new Dialog({
-          title: 'Welcome!',
-          notes: 'Set your name',
-          inputs: [
-            {
-              id: 'name',
-              label: 'Name',
-              type: 'text',
-              placeholder: 'John'
-            }
-          ],
-          doneClick: () => {
-            Store.files.self[0].name = document.querySelector('#name').value
-            Store.saveFiles()
-          }
-        })
-      }
-
-      document.querySelector('#menuSelf').addEventListener('click', () => {location.hash = '#PROFILE:' + Setting.profileDrive})
-      document.querySelector('#menuSelf img').src = Store.files.self[0].avatar || Constant.userDefault.avatar;
-    })
-    window.setInterval(() => {
-      if(State.doRefresh && State.refreshFeed) {
-        State.doRefresh = false;
-        PageType[State.page]()
-      }
-    }, Constant.refreshInterval);
-  }
 
 // Feed
 /// Feed New
@@ -245,6 +241,4 @@ window.store = Store
 window.resetFiles = Actions.resetFiles
 
 // Debug
-if(isDevelopmentDrive) {
-  window.loadPage = PageType[State.page]
-}
+window.loadPage = PageType[State.page]

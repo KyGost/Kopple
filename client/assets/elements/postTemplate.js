@@ -12,7 +12,11 @@ const templateString = `
         </div>
       </div>
       <button class="alterPostButton">⁝</button>
-      <ul class="options dropdown"></ul>
+      <ul class="options dropdown">
+        <li class="dropdown-item optionPermalink">Permalink</li>
+        <li class="dropdown-item optionEdit">Edit</li>
+        <li class="dropdown-item optionDelete">Delete</li>
+      </ul>
       <div class="content"></div>
       <div class="interact">
         <button class="repost" disabled="true">↩ Repost</button>

@@ -27,29 +27,12 @@ const loadFeed
     let feedElement = document.getElementById(Constant.id.feedID)
     clearFeed(address)
     let knowledge = Store.knowledgeBase[address]
-    let {self, feed, interactions} = knowledge
-    self = (knowledge.self || [])[0] || Constant.userDefault
-    let name = self.name || Constant.userDefault.name,
-      avatar = self.avatar || Constant.userDefault.avatar
-    let poster = {
-      address: address,
-      name: name,
-      avatar: avatar
-    }
+    let {feed, interactions} = knowledge
     if(feed !== undefined) feed.forEach(post => {
-      feedElement.appendChild(new Post({
-        ...Constant.dataDefault.post,
-        poster: poster,
-        ...post
-      }).asHTML())
+      feedElement.appendChild(new Post(post).asHTML())
     })
     
     if(interactions !== undefined) interactions.forEach(interaction => {
-      interaction = {
-        ...Constant.dataDefault.interaction,
-        poster: poster,
-        ...interaction
-      }
       if(!loadInteractions.interactionGroups[interaction.type]) loadInteractions.interactionGroups[interaction.type] = [] // TODO: Maybe there's a better way to assign this?
       loadInteractions.interactionGroups[interaction.type].push(interaction)
     })
@@ -62,8 +45,8 @@ const loadInteractions = {
   interactionGroups: {},
   load: function() {
     clearFeed(undefined, true)
-    this.interactionGroups.reply = this.interactionGroups.reply.concat(this.interactionGroups.comment) // Legacy
-    this.interactionGroups.reply.forEach(reply => {
+    this.interactionGroups.reply = this.interactionGroups.reply?.concat(this.interactionGroups.comment) // Legacy
+    this.interactionGroups.reply?.forEach(reply => {
       let postElementID = ['post', reply.address, reply.postIdentity].join('-');
       let postElement = document.getElementById(postElementID);
       if(!postElement) console.log('Post:', postElementID, 'not found, interaction not loaded.')

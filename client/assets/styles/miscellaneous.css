@@ -1,3 +1,8 @@
+.post,#profileInformation {
+  padding: 2%;
+  margin-bottom: 1em;
+}
+
 button { /* TODO: Text gets verically misaligned */
   font-size: 70%;
   background: var(--darkBackground);

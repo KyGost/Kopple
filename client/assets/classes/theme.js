@@ -16,6 +16,15 @@ const Theme = {
     '--buttonBackground': '#001',
     '--darkBackground': '#223',
     '--lightFeature': '#aab'
+  },
+  GROSS: {
+    '--background': '#ebecf9',
+    '--text': '#262323',
+    '--feature': '#bedede',
+    '--disabled': '#a5a5a5',
+    '--buttonBackground': '#c3bdbd',
+    '--darkBackground': '#ededed',
+    '--lightFeature': '#393737'
   }
   /*WILLOW: {
     '--background': 'red',

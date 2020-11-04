@@ -1,13 +1,14 @@
 /* Posts */
 .post {
   background: var(--feature);
-  padding: 2%;
   margin-bottom: 2%;
   width: 96%;
   display: block;
   font-size: 120%;
   color: inherit;
   border: none;
+  content-visibility: auto;
+  contain-intrinsic-size: 100%; /* Update for max height when that's added */
 } .post .content {
   overflow: hidden;
   display: block;
@@ -85,4 +86,8 @@
   background: none;
   color: inherit;
   font-size: 150%;
+}
+
+.post .dropdown-item:not([possible]) {
+  display: none;
 }

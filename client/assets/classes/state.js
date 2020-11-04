@@ -1,6 +1,4 @@
 var State = {
-  refreshFeed: true,
-  doRefresh: true,
   get page() {
     return (window.location.hash === '')
       ? 'feed'
