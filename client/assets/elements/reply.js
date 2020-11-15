@@ -9,7 +9,7 @@ class Reply extends Element {
       ReplyTemplate,
       {
         reply: {posted: reply.posted},
-        identity: {interactions: {click: () => {location.hash = `#PROFILE:${reply.poster.address}`}}},
+        identity: {interactions: {click: () => {location.hash = `#PAGE:PROFILE:${reply.poster.address}`}}},
         avatar: {src: reply.poster.avatar},
         name: {innerText: reply.poster.name},
         content: {innerText: reply.content},

@@ -7,44 +7,40 @@ import fetch from '../bundles/api-beaker-polyfill-datfetch.js'
 
 import {readFromFile, writeToFile, locationFromFile, timeoutSignal} from './utilities.js'
 
-var crawled; // TODO: Perhaps this can be done better?
+var crawled // TODO: Perhaps this can be done better?
 const crawl
   = (
-    onComplete,
-    distance,
-    address = Setting.profileDrive,
-    origin = true,
-    crawlFiles = Constant.acceptedFiles,
-    crawlNextFiles
+    options
   ) => {
     return new Promise((resolve, reject) => {
-      if(crawlNextFiles === undefined) crawlNextFiles = crawlFiles
-      if(origin) crawled = []
-      crawled.push(address)
-
-      console.log('Crawling', address, distance, 'steps to go.')
+      if(options.origin) crawled = []
+      crawled.push(options.address)
+      console.log('Crawling', options.address, options.distance, 'steps to go.')
 
       var waitFor = [];
-      Store.knowledgeBase[address] = []
-      crawlFiles.forEach(file => {
+      Store.knowledgeBase[options.address] = []
+      options.crawlFiles[0].forEach(file => {
         waitFor.push(new Promise((resolveInner, reject) => {
           try {
             let startTime = performance.now()
-            fetch('hyper://' + address + locationFromFile(file), {signal: timeoutSignal()})
+            fetch('hyper://' + options.address + locationFromFile(file), {signal: timeoutSignal()})
               .then(response => response.json())
               .then(result => {
-                Store.knowledgeBase[address][file] = result
+                Store.knowledgeBase[options.address][file] = result
 
-                if(file === 'follows' && distance > 0) {
+                if(file === 'follows' && options.distance > 0) {
                   var awaitCrawls = []
                   result.forEach(follow => {
-                    if(follow.address != undefined && !crawled.includes(follow.address)) awaitCrawls.push(crawl(onComplete, distance - 1, follow.address, false, crawlNextFiles))
+                    if (follow.address?.length === 64 && !crawled.includes(follow.address)) {
+                      if (options.crawlFiles.length > 1) options.crawlFiles.shift()
+                      awaitCrawls.push(crawl({...options, distance: options.distance - 1, address: follow.address, origin: false}))
+                    }
                   })
                   Promise.all(awaitCrawls).then(() => {resolveInner()})
                 } else resolveInner()
               })
               .catch(error => {
-                console.log('Bad crawl, address:', address, 'Error:', error, 'Attempted for:', performance.now() - startTime, 'ms')
+                console.log('Bad crawl, address:', options.address, 'Error:', error, 'Attempted for:', performance.now() - startTime, 'ms')
                 resolveInner()
               });
           } catch(error) {
@@ -53,27 +49,27 @@ const crawl
         }))
       })
       Promise.all(waitFor).then(() => {
-        Store.knowledgeBase[address].self = Store.knowledgeBase[address].self?.map(self => {return {
+        Store.knowledgeBase[options.address].self = Store.knowledgeBase[options.address].self?.map(self => {return {
           ...Constant.dataDefault.self,
           ...self,
-          name: Store.files.follows.find(follow => follow.address === address)?.nickname ?? self.name
+          name: Store.files.follows.find(follow => follow.address === options.address)?.nickname ?? self.name
         }})
         const poster = {
-          address: address,
-          name: Store.knowledgeBase[address]?.self?.[0].name,
-          avatar: Store.knowledgeBase[address]?.self?.[0].avatar
+          address: options.address,
+          name: Store.knowledgeBase[options.address]?.self?.[0].name,
+          avatar: Store.knowledgeBase[options.address]?.self?.[0].avatar
         }
-        Store.knowledgeBase[address].feed = Store.knowledgeBase[address].feed?.map(post => {return {
+        Store.knowledgeBase[options.address].feed = Store.knowledgeBase[options.address].feed?.map(post => {return {
           poster: poster,
           ...Constant.dataDefault.post,
           ...post
         }})
-        Store.knowledgeBase[address].interactions = Store.knowledgeBase[address].interactions?.map(interaction => {return {
+        Store.knowledgeBase[options.address].interactions = Store.knowledgeBase[options.address].interactions?.map(interaction => {return {
           poster: poster,
           ...Constant.dataDefault.interaction,
           ...interaction
         }})
-        onComplete(address)
+        options.onComplete(options.address)
         resolve()
       })
     });
@@ -126,14 +122,16 @@ let Store = {
     },
   update
     : (
-      onComplete = () => {},
-      crawlDistance = Setting.crawlDistance,
-      address,
-      origin,
-      crawlFiles,
-      crawlNextFiles
+      options
     ) => {
-      return crawl(onComplete, crawlDistance, address, origin, crawlFiles, crawlNextFiles).then(() => {console.log('Knowledge Base Filled')})
+      const defaultOptions = {
+        onComplete: () => {},
+        distance: Setting.crawlDistance,
+        address: Setting.profileDrive,
+        origin: true,
+        crawlFiles: [Constant.acceptedFiles]
+      }
+      return crawl({...defaultOptions, ...options}).then(() => {console.log('Knowledge Base Filled')})
     }
 }
 export default Store

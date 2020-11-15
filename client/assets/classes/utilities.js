@@ -3,9 +3,13 @@ import Setting from './setting.js'
 
 import fetch from '../bundles/api-beaker-polyfill-datfetch.js'
 
-import Markdown from 'hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+611/index.js'
-import hider from 'hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+611/plugins/hider.js'
+import Markdown from 'hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1164/index.js' // TODO: Use version (+X)
+import hider from 'hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1164/plugins/hider.js' // TODO: Use version (+X)
+import iframe from 'hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1164/plugins/iframe.js' // TODO: Use version (+X)
+import todo from 'hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1164/plugins/todo.js' // TODO: Use version (+X)
 Markdown.use(...hider)
+Markdown.use(...iframe)
+Markdown.use(...todo)
 
 // Constants
 /// Formatters/Converters
@@ -104,7 +108,7 @@ const markdownToHTML
   = (
     markdown
   ) => {
-    return Markdown.render(markdown)
+    return Markdown.render(unescape(escape(markdown).replace(/%A0/g, '%20')))
   }
 
 const selfAsFollow // Just do inline?
@@ -132,15 +136,25 @@ const arrayFromCSV
   ) => {
     return CSV.split(',').filter(element => element !== '')
   }
-
-const sortElementsByPosted
-  = (
-    className
-  ) => {
-    Array.from(document.querySelectorAll(`.${className}`))
-      .sort((a, b) => (a.getAttribute('posted') < b.getAttribute('posted')) ? 1 : -1)
-      .forEach(element => element.parentElement.appendChild(element))
-  }
+const sortElementsByPostedSort = (a, b) =>
+  a.classList.contains('post')
+  ? sortElementsByPostedSortPinned(a, b) ?? sortElementsByPostedSortPosted(a, b)
+  : sortElementsByPostedSortPosted(a, b)
+const sortElementsByPostedSortPosted = (a, b) =>
+  a.getAttribute('posted') > b.getAttribute('posted')
+  ? -1
+  : 1
+const sortElementsByPostedSortPinned = (a, b) =>
+  a.getAttribute('pin') === 'true'
+  ? -1
+  : b.getAttribute('pin') === 'true'
+  ? 1
+  : null
+const sortElementsByPosted = (className) => {
+  Array.from(document.querySelectorAll(`.${className}`))
+    .sort(sortElementsByPostedSort)
+    .forEach(element => element.parentElement.appendChild(element))
+}
 
 // File IO
 const timeoutSignal

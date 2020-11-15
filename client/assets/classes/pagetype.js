@@ -1,6 +1,7 @@
 import {newElement, markdownToHTML} from './utilities.js'
 import Actions from './actions.js'
 import Constant from './constant.js'
+import State from './state.js'
 import Store from './store.js'
 import Setting from './setting.js'
 
@@ -8,21 +9,28 @@ import Post from '../elements/post.js'
 import Dialog from '../elements/dialog.js'
 
 const PageType = {
-  feed: async (fresh) => {
+  FEED: async (fresh) => {
     if(fresh) Actions.clearFeed()
-    await Store.update(Actions.loadFeed)
+    await Store.update({
+      onComplete: result => Actions.loadFeed(result, {pin: 'user'}),
+      crawlFiles: [['feed', 'interactions', 'self', 'follows'], ['feed', 'interactions', 'self', 'follows'], ['interactions', 'self', 'follows']]
+    })
     Actions.loadInteractions.load()
   },
-  newInstall: () => {
+  NEWINSTALL: () => {
     Actions.resetFiles()
     window.location.hash = ''
     alert('Welcome to Kopple!\nTell people your address is:\n' + location.hostname + '\n(You can copy it from the URL bar)\n\nYou should probably bookmark this page by the way!')
   },
-  profile: async () => {
-    let address = window.location.hash.replace('#PROFILE:', '')
+  PROFILE: async () => {
+    let address = State.hash.PAGE.PROFILE
 
     Actions.clearFeed()
-    await Store.update(Actions.loadFeed, undefined, address, undefined, ['feed', 'interactions', 'self', 'follows'], ['interactions', 'self', 'follows'])
+    await Store.update({
+      onComplete: result => Actions.loadFeed(result, {pin: 'all'}),
+      address: address,
+      crawlFiles: [['feed', 'interactions', 'self', 'follows'], ['interactions', 'self', 'follows']]
+    })
     Actions.loadInteractions.load()
 
     const self = Store.knowledgeBase[address].self[0]
@@ -102,11 +110,11 @@ const PageType = {
       optionsElement.appendChild(option)
     })
   },
-  postLink: async () => {
-    let [address, identity] = window.location.hash.replace('#POST:', '').split('-')
+  POST: async () => {
+    let [address, identity] = State.hash.PAGE.POST.split('-')
     let feedElement = document.getElementById(Constant.id.feedID)
     
-    await Store.update(undefined, 0, address, undefined, ['feed', 'self'])
+    await Store.update({distance: 0, address: address, crawlFiles: [['feed', 'self']]})
     Actions.clearFeed()
 
     let {feed} = Store.knowledgeBase[address]

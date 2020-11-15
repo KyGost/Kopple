@@ -1,6 +1,7 @@
 import Theme from './theme.js'
 
 import Constant from './constant.js'
+import State from './state.js'
 import Store from './store.js'
 
 import fetch from '../bundles/api-beaker-polyfill-datfetch.js'
@@ -20,26 +21,33 @@ const loadTheme
     })
   }
 
-const loadFeed
-  = (
-    address
-  ) => {
-    let feedElement = document.getElementById(Constant.id.feedID)
-    clearFeed(address)
-    let knowledge = Store.knowledgeBase[address]
-    let {feed, interactions} = knowledge
-    if(feed !== undefined) feed.forEach(post => {
-      feedElement.appendChild(new Post(post).asHTML())
-    })
-    
-    if(interactions !== undefined) interactions.forEach(interaction => {
-      if(!loadInteractions.interactionGroups[interaction.type]) loadInteractions.interactionGroups[interaction.type] = [] // TODO: Maybe there's a better way to assign this?
-      loadInteractions.interactionGroups[interaction.type].push(interaction)
-    })
-
-    
-    sortElementsByPosted('post')
+const loadFeed = (
+  address,
+  options = {
+    pin: 'none'
   }
+) => {
+  let feedElement = document.getElementById(Constant.id.feedID)
+  clearFeed(address)
+  let knowledge = Store.knowledgeBase[address]
+  let {feed, interactions} = knowledge
+  let filter = State.hash.FILTER && Object.keys(State.hash.FILTER)[0] // Not particularly clean
+  if(filter) {
+    let filterTest = new RegExp(filter, 'i')
+    feed = feed?.filter(post => filterTest.test(post.topics?.join())) // Includes is case sensitive
+  }
+
+  if(feed !== undefined) feed.forEach(post => {
+    feedElement.appendChild(new Post(post, options).asHTML())
+  })
+  
+  if(interactions !== undefined) interactions.forEach(interaction => {
+    if(!loadInteractions.interactionGroups[interaction.type]) loadInteractions.interactionGroups[interaction.type] = [] // TODO: Maybe there's a better way to assign this?
+    loadInteractions.interactionGroups[interaction.type].push(interaction)
+  })
+
+  sortElementsByPosted('post')
+}
 
 const loadInteractions = {
   interactionGroups: {},

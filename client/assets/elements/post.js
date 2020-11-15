@@ -6,12 +6,22 @@ import State from '../classes/state.js'
 import Setting from '../classes/setting.js'
 
 class Post extends Element {
-  constructor(post) {
+  constructor(post, options) {
     super()
     this.post = post
+    let doPin =
+      options.pin !== 'none'
+      && post.topics.includes('/pin')
+      && (
+        options.pin === 'all'
+        || (
+          options.pin === 'user'
+          && post.poster.address === Setting.profileDrive
+        )
+      )
     var templateOptions = {
-      post: {id: ['post', post.poster.address, post.identity].join('-'), posted: post.posted},
-      identity: {interactions: {click: () => {location.hash = `#PROFILE:${post.poster.address}`}}},
+      post: {id: ['post', post.poster.address, post.identity].join('-'), posted: post.posted, pin: doPin},
+      identity: {interactions: {click: () => State.page = {PROFILE: post.poster.address}}},
       poster: {innerText: post.poster.name},
       avatar: {src: post.poster.avatar},
       relative: {innerText: formatDateDifference(post.posted)},
@@ -32,15 +42,11 @@ class Post extends Element {
     }
     if(post.poster.address === Setting.profileDrive) {
       options.optionEdit = {possible: true, interactions: {click: this.editClick}}
-      options.optionDelete = {possible: true, interactions: {click: this.editClick}}
+      options.optionDelete = {possible: true, interactions: {click: this.deleteClick}}
     }
     return options
   }
-  permalinkClick
-    = (
-    ) => {
-      location.hash = '#POST:' + [this.post.poster.address, this.post.identity].join('-')
-    }
+  permalinkClick = () => State.page = {POST: [this.post.poster.address, this.post.identity].join('-')}
   editClick
     = (
     ) => {

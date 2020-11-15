@@ -15,9 +15,24 @@ import PageType from './classes/pagetype.js'
 
 // TODO: Service workers. Dependancy: Service workers in Agregore/Beaker
 // Manual interaction
-const menuFollow
-  = (
-  ) => {
+const controlFilter = () => {
+  new Dialog({
+    title: 'Filter posts',
+    notes: 'Choose the topics you would like to see',
+    doneText: 'Filter',
+    inputs: [{id: 'blacklist', label: 'Blacklist', type: 'checkbox'}, {type: 'hidden'}].concat([...Object.keys(Store.knowledgeBase).map(address => Store.knowledgeBase[address].feed?.map(post => post.topics).flat()).flat().reduce((accumulative, current) => accumulative.set(current, (accumulative.get(current) || 0) + 1), new Map())].sort((a, b) => b[1] - a[1]).map(topic => {return {
+      id: topic[0],
+      class: 'topic',
+      label: `${topic[0]} (${topic[1]})`,
+      type: 'checkbox'
+    }})), // TODO: Beautify
+    doneClick: () => {
+      let isBlacklist = document.querySelector('#blacklist').checked
+      State.hashSet('FILTER', `(${(isBlacklist ? '?!' : '')}${Array.from(document.querySelectorAll('.dialog .topic')).filter(element => element.checked === true).map(element => element.id).join('|')})`)
+    }
+  })
+}
+const menuFollow = () => {
     let extraInfo = Utilities.newElement(
       'found',
       'p'
@@ -26,7 +41,6 @@ const menuFollow
       title: 'Follow User',
       notes: 'Enter an address below',
       doneText: 'Follow',
-      type: 'singleInput',
       extraInfo: extraInfo,
       inputs: [
         {
@@ -101,15 +115,20 @@ const menuSettings
 const onStart
   = (
   ) => {
-    document.body.setAttribute('page', location.hash.replace(/#(.*):.*/g, '$1') || 'FEED')
+    if (State.hash.POST) {
+      let {POST, ...hash} = {...State.hash, PAGE: {POST: Object.keys(State.hash.POST)[0]}}
+      State.hash = hash
+    }
+
+    document.body.setAttribute('page', State.page)
 
     if(!Setting.profileDrive) return welcomeDialog()
 
     Actions.loadTheme(Setting.theme)
 
     // Check if vistor owns drive
-    beaker.hyperdrive.writeFile(`hyper://${Setting.profileDrive}/.writeCheck`, '').catch(() => {
-      document.querySelector('#feedNewPost').innerHTML = Utilities.newElement(
+    fetch(`hyper://${Setting.profileDrive}`, {method: 'HEAD'}).then(response => {
+      if (!/.*PUT.*/.test(response.headers.get('Allow') || 'PUT')) document.querySelector('#feedNewPost').innerHTML = Utilities.newElement(
         'warning',
         'div',
         'THIS IS NOT YOUR DRIVE'
@@ -138,8 +157,8 @@ const onStart
         })
       }
 
-      document.querySelector('#menuSelf').addEventListener('click', () => {location.hash = '#PROFILE:' + Setting.profileDrive})
-      document.querySelector('#menuSelf img').src = Store.files.self[0].avatar
+      document.querySelector('#menuSelf').addEventListener('click', () => State.page = {PROFILE: Setting.profileDrive})
+      document.querySelector('#menuSelf img').src = Store.files.self[0].avatar ?? Constant.dataDefault.self.avatar
     })
   }
 
@@ -197,7 +216,7 @@ const welcomeDialog
               // Not possible to in Agregore atm (CORS: Link)
               const newDrive = await beaker.hyperdrive.createDrive({title: 'Kopple'})
               window.onhashchange = () => {}
-              location.hash = '#NEWINSTALL'
+              State.page = 'NEWINSTALL'
               Setting.profileDrive = newDrive.url.replace(/.*\/\/(.*)\/.*/g, '$1')
             }
            }
@@ -233,7 +252,7 @@ const feedNewPostPost
   }
 
 window.onStart = onStart
-//window.menuProfile = menuProfile
+window.controlFilter = controlFilter
 window.menuFollow = menuFollow
 window.menuSettings = menuSettings
 window.feedNewPostPost = feedNewPostPost

@@ -1,4 +1,5 @@
 @import "./styles/headElement.css";
+@import "./styles/menu.css";
 @import "./styles/newPost.css";
 @import "./styles/scrollbar.css";
 @import "./styles/identity.css";
@@ -67,34 +68,6 @@ body {
 
 .post {
   contain: content;
-}
-
-/* Menu */
-#menu {
-  position: fixed;
-  right: 0;
-  top: 0;
-  height: 98%;
-  width: 5vw;
-  margin: 1%;
-} #menu>* {
-  width: 100%;
-  /*padding-bottom: 100%; Allows for ratios but messes up height */
-  height: 5vw;
-  margin-bottom: 1vh;
-  cursor: pointer;
-} #menu>*.smaller {
-  background: var(--feature);
-  border-radius: 100%;
-} #menu>*>* {
-  border-radius: 30%;
-} #menu>*:not(.smaller)>* {
-  height: 100%;
-  width: 100%;
-} #menu>*.smaller>* {
-  height: 70%;
-  width: 70%;
-  padding: 15%;
 }
 
 /* Feed */
