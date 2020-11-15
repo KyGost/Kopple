@@ -1,7 +1,8 @@
 body .headElement {
-  display: none;
-  background: var(--feature);
+	display: none;
+	background: var(--feature);
 }
-body[page="FEED"] #feedNewPost,body[page="PROFILE"] #profileInformation {
-  display: block;
+body[page="FEED"] #feedNewPost,
+body[page="PROFILE"] #profileInformation {
+	display: block;
 }

@@ -1,18 +1,18 @@
 /* Dialog */
 .dialog {
-  position: fixed;
-  top: 30%;
-  bottom: 30%;
-  left: 30%;
-  right: 30%;
-  height: 30%;
-  width: 30%;
-  background:var(--darkBackground);
-  padding: 2%;
+	position: fixed;
+	top: 30%;
+	bottom: 30%;
+	left: 30%;
+	right: 30%;
+	height: 30%;
+	width: 30%;
+	background: var(--darkBackground);
+	padding: 2%;
 }
 .dialog {
-  text-align: center;
+	text-align: center;
 }
 .dialogLabel::after {
-  content: ": ";
+	content: ": ";
 }

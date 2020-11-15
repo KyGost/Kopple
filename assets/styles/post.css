@@ -1,93 +1,105 @@
 /* Posts */
 .post {
-  background: var(--feature);
-  margin-bottom: 2%;
-  width: 96%;
-  display: block;
-  font-size: 120%;
-  color: inherit;
-  border: none;
-  content-visibility: auto;
-  contain-intrinsic-size: 100%; /* Update for max height when that's added */
-} .post .content {
-  overflow: hidden;
-  display: block;
-} .post .content[contenteditable] + .interact {
-  display: none;
-} .post .content * {
-  white-space: normal;
+	background: var(--feature);
+	margin-bottom: 2%;
+	width: 96%;
+	display: block;
+	font-size: 120%;
+	color: inherit;
+	border: none;
+	content-visibility: auto;
+	contain-intrinsic-size: 100%; /* Update for max height when that's added */
+}
+.post .content {
+	overflow: hidden;
+	display: block;
+}
+.post .content[contenteditable] + .interact {
+	display: none;
+}
+.post .content * {
+	white-space: normal;
 }
 
 .post .poster {
-  font-weight: bold;
-} .post .posted {
-  font-size: 80%;
-  font-weight: lighter;
+	font-weight: bold;
+}
+.post .posted {
+	font-size: 80%;
+	font-weight: lighter;
 }
 
 .posted .date {
-  display: none;
-}.posted:hover .relative {
-  display: none;
-} .posted:hover .date {
-  display: initial;
+	display: none;
+}
+.posted:hover .relative {
+	display: none;
+}
+.posted:hover .date {
+	display: initial;
 }
 
-.post .interact, .post .buttons {
-  display: flex;
+.post .interact,
+.post .buttons {
+	display: flex;
 }
 
 .post .replies {
-  display: none;
-} .post.hasReplies .content:not([contenteditable])~.replies {
-  display: initial;
+	display: none;
+}
+.post.hasReplies .content:not([contenteditable]) ~ .replies {
+	display: initial;
 }
 .post .replies .new {
-  display: flex;
-} .post .replies .new .textarea {
-  flex: 1;
-} .post .replies .new .post {
-  flex: 0;
+	display: flex;
+}
+.post .replies .new .textarea {
+	flex: 1;
+}
+.post .replies .new .post {
+	flex: 0;
 }
 
 .showAllButton {
-  text-align: center;
-  display: none;
-} .post>.replies:not(.showAll)>.showAllButton:nth-last-child(n+5) {
-  display: block;
+	text-align: center;
+	display: none;
+}
+.post > .replies:not(.showAll) > .showAllButton:nth-last-child(n + 5) {
+	display: block;
 }
 
-.post>.replies:not(.showAll)>.reply:not(:nth-of-type(-n+7)) {
-  display: none;
+.post > .replies:not(.showAll) > .reply:not(:nth-of-type(-n + 7)) {
+	display: none;
 }
 
 .post .replies .reply {
-  margin-top: 2%;
+	margin-top: 2%;
 }
 
 .post .replies .reply .name {
-  font-weight: bold;
-} .post .replies .reply .name::after {
-  content: ': ';
+	font-weight: bold;
+}
+.post .replies .reply .name::after {
+	content: ": ";
 }
 
 .post .content img {
-  height: auto;
-  width: 95%;
-  padding: 2%;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
+	height: auto;
+	width: 95%;
+	padding: 2%;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }
 .alterPostButton {
-  float: right;
-  display: inline;
-  border: none;
-  background: none;
-  color: inherit;
-  font-size: 150%;
+	float: right;
+	display: inline;
+	border: none;
+	background: none;
+	color: inherit;
+	font-size: 150%;
 }
 
 .post .dropdown-item:not([possible]) {
-  display: none;
+	display: none;
 }

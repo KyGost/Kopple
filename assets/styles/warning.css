@@ -1,5 +1,5 @@
 .warning {
-  text-align: center;
-  background: var(--feature);
-  padding: 2% 0 2% 0;
+	text-align: center;
+	background: var(--feature);
+	padding: 2% 0 2% 0;
 }

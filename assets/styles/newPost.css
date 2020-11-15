@@ -1,32 +1,36 @@
 #commonmarkLogo {
-  position: absolute;
-  left: calc(40% + 15% - calc(1em * 1.8)); /* Yuck: Feed width + Feed margin - (Logo height * Aspect ratio)*/
-} #commonmarkLogo>svg {
-  height: 1em;
+	position: absolute;
+	left: calc(
+		40% + 15% - calc(1em * 1.8)
+	); /* Yuck: Feed width + Feed margin - (Logo height * Aspect ratio)*/
 }
-#feedNewPost>p {
-  margin-block-start: 0;
+#commonmarkLogo > svg {
+	height: 1em;
+}
+#feedNewPost > p {
+	margin-block-start: 0;
 }
 
 .new #feedNewPostContent {
-  width: 100%;
-  margin-top: 4%;
-  background: inherit;
-  color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  padding: 1%;
-  margin: 0;
-  border: none;
-  resize: vertical;
-  height: 50px;
-  transition: height .15s ease-in;
-} .new:focus-within #feedNewPostContent {
-  height: 300px;
-  transition: height .25s ease-out;
+	width: 100%;
+	margin-top: 4%;
+	background: inherit;
+	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	padding: 1%;
+	margin: 0;
+	border: none;
+	resize: vertical;
+	height: 50px;
+	transition: height 0.15s ease-in;
+}
+.new:focus-within #feedNewPostContent {
+	height: 300px;
+	transition: height 0.25s ease-out;
 }
 
 .new {
-  background: var(--feature);
-  width: 100%;
+	background: var(--feature);
+	width: 100%;
 }

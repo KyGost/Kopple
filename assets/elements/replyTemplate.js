@@ -12,6 +12,8 @@ const templateString = `
     </span>
   </div>
 </template>
-`
-const template = new DOMParser().parseFromString(templateString, 'text/html').querySelector('template')
-export default template
+`;
+const template = new DOMParser()
+	.parseFromString(templateString, "text/html")
+	.querySelector("template");
+export default template;

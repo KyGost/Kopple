@@ -11,72 +11,80 @@
 
 /* Colors */
 :root {
-  --background: #434141;
-  --text: #ccc;
-  --feature: #383736;
-  --disabled: #444;
-  --buttonBackground: #000;
-  --darkBackground: #222;
-  --lightFeature: #aaa;
+	--background: #434141;
+	--text: #ccc;
+	--feature: #383736;
+	--disabled: #444;
+	--buttonBackground: #000;
+	--darkBackground: #222;
+	--lightFeature: #aaa;
 }
 
 /* Utility */
-.textarea[contenteditable],.post .content[contenteditable] {
-  box-sizing: border-box;
-  border: solid 1px #666;
-  background: var(--background);
-  overflow: hidden;
-} .textarea[contenteditable]:empty::before {
-    content: attr(placeholder);
-    color: #555; 
-} .textarea[contenteditable]:empty:focus::before {
-    content: "";
+.textarea[contenteditable],
+.post .content[contenteditable] {
+	box-sizing: border-box;
+	border: solid 1px #666;
+	background: var(--background);
+	overflow: hidden;
+}
+.textarea[contenteditable]:empty::before {
+	content: attr(placeholder);
+	color: #555;
+}
+.textarea[contenteditable]:empty:focus::before {
+	content: "";
 }
 
 .dropdown {
-  display: none;
-  position: relative;
-  float: right;
-  background: var(--text);
-  color: var(--background);
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-} button:focus+.dropdown, .dropdown:hover {
-  display: initial;
-} .dropdown>.dropdown-item {
-  padding: 3px;
-} .dropdown>.dropdown-item:not(:first-child) {
-  border-top: solid var(--background) 1px;
-} .dropdown-item:hover {
-  background: var(--lightFeature);
+	display: none;
+	position: relative;
+	float: right;
+	background: var(--text);
+	color: var(--background);
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+button:focus + .dropdown,
+.dropdown:hover {
+	display: initial;
+}
+.dropdown > .dropdown-item {
+	padding: 3px;
+}
+.dropdown > .dropdown-item:not(:first-child) {
+	border-top: solid var(--background) 1px;
+}
+.dropdown-item:hover {
+	background: var(--lightFeature);
 }
 
-.whowhen>* {
-  display: block;
-  white-space: nowrap;
+.whowhen > * {
+	display: block;
+	white-space: nowrap;
 }
 
 /* Core */
 body {
-  background: var(--background);
-  color: var(--text);
-  font-family: system-ui, sans-serif;
-  font-size: 120%;
-  overflow-wrap: break-word;
+	background: var(--background);
+	color: var(--text);
+	font-family: system-ui, sans-serif;
+	font-size: 120%;
+	overflow-wrap: break-word;
 }
 
 .post {
-  contain: content;
+	contain: content;
 }
 
 /* Feed */
 #feed {
-  width: 40%;
-  height: 100%;
-  margin-left: 15%;
-  margin-right: 15%;
+	width: 40%;
+	height: 100%;
+	margin-left: 15%;
+	margin-right: 15%;
 }
 #feedNewPostText {
-  height: 15%;
+	height: 15%;
 }
