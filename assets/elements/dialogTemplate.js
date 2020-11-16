@@ -13,7 +13,6 @@ const templateString = `
   </div>
 </template>
 `;
-const template = new DOMParser()
+export default new DOMParser()
 	.parseFromString(templateString, "text/html")
 	.querySelector("template");
-export default template;

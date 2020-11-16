@@ -11,7 +11,7 @@ import Theme from "./classes/theme.js";
 
 import Store from "./classes/store.js";
 
-import PageType from "./classes/pagetype.js";
+import PageType from "./classes/pageType.js";
 
 // TODO: Service workers. Dependancy: Service workers in Agregore/Beaker
 // Manual interaction
@@ -268,8 +268,8 @@ const feedNewPostPost = async () => {
 	const contentElement = document.getElementById(
 		Constant.id.feedNewPostID + "Content"
 	);
-	const tagsElement = document.getElementById(
-		Constant.id.feedNewPostID + "Tags"
+	const topicsElement = document.getElementById(
+		Constant.id.feedNewPostID + "Topics"
 	);
 	const filtersElement = document.getElementById(
 		Constant.id.feedNewPostID + "Filters"
@@ -280,12 +280,12 @@ const feedNewPostPost = async () => {
 	Store.files.self[0].nextPostIdentity =
 		(Store.files.self[0].nextPostIdentity + 1) | 0;
 	post.content = contentElement.innerText;
-	post.tags = Utilities.arrayFromCSV(tagsElement.value);
+	post.topics = Utilities.arrayFromCSV(topicsElement.value);
 	post.filters = Utilities.arrayFromCSV(filtersElement.value);
 	post.posted = new Date().getTime();
 
 	contentElement.innerText = "";
-	tagsElement.value = "";
+	topicsElement.value = "";
 	filtersElement.value = "";
 
 	Store.files.feed.push(post);

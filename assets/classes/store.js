@@ -2,6 +2,7 @@ import Constant from "./constant.js";
 import Setting from "./setting.js";
 
 import Actions from "./actions.js";
+import Normaliser from "./normaliser.js";
 
 import fetch from "../bundles/api-beaker-polyfill-datfetch.js";
 
@@ -11,111 +12,6 @@ import {
 	locationFromFile,
 	timeoutSignal,
 } from "./utilities.js";
-
-var crawled; // TODO: Perhaps this can be done better?
-const crawl = (options) => {
-	return new Promise((resolve, reject) => {
-		if (options.origin) crawled = [];
-		crawled.push(options.address);
-		console.log("Crawling", options.address, options.distance, "steps to go.");
-
-		var waitFor = [];
-		Store.knowledgeBase[options.address] = [];
-		options.crawlFiles[0].forEach((file) => {
-			waitFor.push(
-				new Promise((resolveInner, reject) => {
-					try {
-						let startTime = performance.now();
-						fetch("hyper://" + options.address + locationFromFile(file), {
-							signal: timeoutSignal(),
-						})
-							.then((response) => response.json())
-							.then((result) => {
-								Store.knowledgeBase[options.address][file] = result;
-
-								if (file === "follows" && options.distance > 0) {
-									var awaitCrawls = [];
-									result.forEach((follow) => {
-										if (
-											follow.address?.length === 64 &&
-											!crawled.includes(follow.address)
-										) {
-											if (options.crawlFiles.length > 1)
-												options.crawlFiles.shift();
-											awaitCrawls.push(
-												crawl({
-													...options,
-													distance: options.distance - 1,
-													address: follow.address,
-													origin: false,
-												})
-											);
-										}
-									});
-									Promise.all(awaitCrawls).then(() => {
-										resolveInner();
-									});
-								} else resolveInner();
-							})
-							.catch((error) => {
-								console.log(
-									"Bad crawl, address:",
-									options.address,
-									"Error:",
-									error,
-									"Attempted for:",
-									performance.now() - startTime,
-									"ms"
-								);
-								resolveInner();
-							});
-					} catch (error) {
-						console.log(error);
-					}
-				})
-			);
-		});
-		Promise.all(waitFor).then(() => {
-			Store.knowledgeBase[options.address].self = Store.knowledgeBase[
-				options.address
-			].self?.map((self) => {
-				return {
-					...Constant.dataDefault.self,
-					...self,
-					name:
-						Store.files.follows.find(
-							(follow) => follow.address === options.address
-						)?.nickname ?? self.name,
-				};
-			});
-			const poster = {
-				address: options.address,
-				name: Store.knowledgeBase[options.address]?.self?.[0].name,
-				avatar: Store.knowledgeBase[options.address]?.self?.[0].avatar,
-			};
-			Store.knowledgeBase[options.address].feed = Store.knowledgeBase[
-				options.address
-			].feed?.map((post) => {
-				return {
-					poster: poster,
-					...Constant.dataDefault.post,
-					...post,
-				};
-			});
-			Store.knowledgeBase[options.address].interactions = Store.knowledgeBase[
-				options.address
-			].interactions?.map((interaction) => {
-				return {
-					poster: poster,
-					...Constant.dataDefault.interaction,
-					...interaction,
-				};
-			});
-			options.onComplete(options.address);
-			resolve();
-		});
-	});
-};
 
 let Store = {
 	files: {}, // TODO: Find a way to automatically save whenever an object under files is changed.
@@ -157,4 +53,72 @@ let Store = {
 		});
 	},
 };
+
+var crawled; // TODO: Perhaps this can be done better?
+const crawl = (options) =>
+	new Promise((resolve, reject) => {
+		if (options.origin) crawled = [];
+		crawled.push(options.address);
+		console.log("Crawling", options.address, options.distance, "steps to go.");
+
+		Store.knowledgeBase[options.address] = [];
+		Promise.all(
+			options.crawlFiles[0].map(
+				(file) =>
+					new Promise((resolveInner, reject) => {
+						let startTime = performance.now();
+						fetch(`hyper://${options.address}${locationFromFile(file)}`, {
+							signal: timeoutSignal(),
+						})
+							.then((response) => response.json())
+							.then((result) => {
+								Store.knowledgeBase[options.address][file] = result;
+								resolveInner(options);
+							})
+							.catch((error) => {
+								console.log(
+									"Bad crawl, address:",
+									options.address,
+									"Error:",
+									error,
+									"Attempted for:",
+									performance.now() - startTime,
+									"ms"
+								);
+								resolveInner();
+							});
+					})
+			)
+		)
+			.then(() => normalise(options))
+			.then((outgoingCrawls) => Promise.all(outgoingCrawls))
+			.then(resolve);
+	});
+
+const normalise = (options) => {
+	const knowledge = Store.knowledgeBase[options.address];
+	if (!knowledge) return false;
+	new Normaliser(
+		knowledge,
+		Constant.dataDefault,
+		options.address
+	).giveNormalsy();
+
+	options.onComplete(options.address);
+
+	if (knowledge.follows && options.distance > 0) {
+		return knowledge.follows.map((follow) => {
+			if (follow.address?.length === 64 && !crawled.includes(follow.address)) {
+				if (options.crawlFiles.length > 1) options.crawlFiles.shift();
+				return crawl({
+					...options,
+					distance: options.distance - 1,
+					address: follow.address,
+					origin: false,
+				});
+			} else return (async () => {})();
+		});
+	} else return (async () => {})();
+};
+
 export default Store;

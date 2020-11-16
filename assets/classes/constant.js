@@ -13,14 +13,14 @@ const Constant = {
 	],
 	IOTimeout: 10000,
 	dataDefault: {
-		post: {
+		feed: {
 			identity: -1,
 			content: "",
 			topics: [],
 			filters: [],
 			posted: 0,
 		},
-		interaction: {
+		interactions: {
 			address: "",
 			postIdentity: -1,
 			type: "",

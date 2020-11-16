@@ -3,10 +3,10 @@ import Setting from "./setting.js";
 
 import fetch from "../bundles/api-beaker-polyfill-datfetch.js";
 
-import Markdown from "hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1164/index.js"; // TODO: Use version (+X)
-import hider from "hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1164/plugins/hider.js"; // TODO: Use version (+X)
-import iframe from "hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1164/plugins/iframe.js"; // TODO: Use version (+X)
-import todo from "hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1164/plugins/todo.js"; // TODO: Use version (+X)
+import Markdown from "hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1172/index.js"; // TODO: Use version (+X)
+import hider from "hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1172/plugins/hider.js"; // TODO: Use version (+X)
+import iframe from "hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1172/plugins/iframe.js"; // TODO: Use version (+X)
+import todo from "hyper://7a9332a74279a911bd01e5d016fed0d790256637c3dc4423635b4ab3d9074880+1172/plugins/todo.js"; // TODO: Use version (+X)
 Markdown.use(...hider);
 Markdown.use(...iframe);
 Markdown.use(...todo);
@@ -112,7 +112,8 @@ const markdownToHTML = (markdown) => {
 	return Markdown.render(unescape(escape(markdown).replace(/%A0/g, "%20")));
 };
 
-const selfAsFollow = () => { // Just do inline?
+const selfAsFollow = () => {
+	// Just do inline?
 	return {
 		address: location.host,
 	};
