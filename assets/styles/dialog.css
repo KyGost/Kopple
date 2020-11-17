@@ -1,18 +1,23 @@
 /* Dialog */
 .dialog {
 	position: fixed;
-	top: 30%;
-	bottom: 30%;
-	left: 30%;
-	right: 30%;
-	height: 30%;
-	width: 30%;
+	top: 20%;
+	bottom: 20%;
+	left: 20%;
+	right: 20%;
+	height: 50%;
+	width: 50%;
 	background: var(--darkBackground);
 	padding: 2%;
+	display: grid;
 }
 .dialog {
 	text-align: center;
 }
 .dialogLabel::after {
 	content: ": ";
+}
+.dialogInputs {
+	height: 100%;
+	overflow: auto;
 }

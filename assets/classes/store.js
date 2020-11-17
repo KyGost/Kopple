@@ -90,22 +90,29 @@ const crawl = (options) =>
 					})
 			)
 		)
-			.then(() => normalise(options))
+			.then(() => complete(options))
 			.then((outgoingCrawls) => Promise.all(outgoingCrawls))
 			.then(resolve);
 	});
 
-const normalise = (options) => {
+const complete = (options) => {
 	const knowledge = Store.knowledgeBase[options.address];
 	if (!knowledge) return false;
+
+	normalise(options, knowledge);
+	options.onComplete(options.address);
+	return crawlFurther(options, knowledge);
+};
+
+const normalise = (options, knowledge) => {
 	new Normaliser(
 		knowledge,
 		Constant.dataDefault,
 		options.address
 	).giveNormalsy();
+};
 
-	options.onComplete(options.address);
-
+const crawlFurther = (options, knowledge) => {
 	if (knowledge.follows && options.distance > 0) {
 		return knowledge.follows.map((follow) => {
 			if (follow.address?.length === 64 && !crawled.includes(follow.address)) {
@@ -116,9 +123,9 @@ const normalise = (options) => {
 					address: follow.address,
 					origin: false,
 				});
-			} else return (async () => {})();
+			} else return [];
 		});
-	} else return (async () => {})();
+	} else return [];
 };
 
 export default Store;

@@ -13,7 +13,7 @@ import State from "../classes/state.js";
 import Setting from "../classes/setting.js";
 
 class Post extends Element {
-	constructor(post, options) {
+	constructor(post, options = { pin: "none" }) {
 		super();
 		this.post = post;
 		let doPin =
